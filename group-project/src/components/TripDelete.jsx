@@ -20,7 +20,7 @@ export default function tripDelete (){
                 method:"DELETE",
                 headers:{"Content-Type":"application/json",
                 Authorization: 'Bearer ' + localStorage.getItem('token')}
-            }).then(()=>console.log("record deleted")).then(()=>navigate("/trips"))
+            }).then(()=>console.log("record deleted")).then(()=>navigate("/myTrips"))
         }
         deleteTrip(id);
       }, []);
