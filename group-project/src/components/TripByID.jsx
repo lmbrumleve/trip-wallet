@@ -104,7 +104,7 @@ export default function TripByID(props) {
         <table>
             <tr>
                 <th>Date</th>
-                <th>Item</th>
+                {/* <th>Item</th> */}
                 <th>Description</th>
                 <th>Category</th>
                 <th>Amount (Local)</th>
@@ -114,8 +114,10 @@ export default function TripByID(props) {
             {transactions.map(ans=>(
             <tr>
                 <td>{format(ans.date, 'P')}</td>
-                <td>{ans.name}</td>
-                <td>{ans.description}</td>
+                {/* <td>{ans.name}</td> */}
+                <td>Payment to {ans.name} 
+                <br/>
+                {ans.description}</td>
                 <td>{ans.budgetCategory}</td>
                 <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
                 <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>

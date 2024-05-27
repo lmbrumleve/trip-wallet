@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode"
 import CalendarInput from "./CalendarInput.jsx"
 import ReactDatePicker from "react-datepicker"
 import { FaCalendarAlt } from "react-icons/fa"
+import { Card } from "react-bootstrap"
 
 function CustomInput({value, onClick}){
 
@@ -87,6 +88,7 @@ export default function TripAdd() {
     return(
     <div>
         <NavBar/>
+        <Card>
         <h1>Create New Trip</h1>
 
 <hr/>
@@ -123,5 +125,6 @@ export default function TripAdd() {
 
             <input className="btn btn-primary" type="submit" onClick = {addTrip}/>
         </form>
+        </Card>
     </div>
 )}

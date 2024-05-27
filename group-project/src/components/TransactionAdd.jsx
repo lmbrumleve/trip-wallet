@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
 import { jwtDecode } from "jwt-decode"
 import { format } from "date-fns"
+import { Card } from "react-bootstrap"
 
 export default function TransactionAdd() {
 
@@ -127,20 +128,30 @@ const currencyArr = Object.keys(currencies);
         <br/>
         <br/>
         <br/>
+        <Card className="shadow">
 <h1>Create New Transaction</h1>
 <hr/>
         <form method="POST">
-            <label for="name">Transaction Name</label><br />
+            <label for="name" className="trip-button">Payment to:  </label>
             <input type = "text" name = "name" id="name" onChange = {(e)=>setName(e.target.value)} /><br />
 
-            <label for="description">Notes</label><br />
+            <label for="description" className="trip-button">Description: </label>
             <input type = "text" name = "description" id="description" onChange = {(e)=>setDescription(e.target.value)} /><br />
 
-            <label for="amount">Transaction Amount</label><br />
+            <label for="amount" className="trip-button">Transaction Amount: </label>
             <input type = "text" name = "amount" id="amount" onChange = {(e)=>setAmount(e.target.value)} /><br />
             
+                        <label for="currency" className="trip-button">Currency: </label>
+            <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
+            <option value="">-</option>
+            {currencyArr.map((ans) => {
+                    return (
+                    <option value={ans}>{ans}</option>
+                    )
+                    })}
+            </select><br />
+            
             <label htmlFor="budgetCategory" className="trip-button">Budget Category:</label>
-            <br/>
             <select id="budgetCategory" name="budgetCategory" onChange = {(e)=>setBudgetCategory(e.target.value)}>
             <option value="">-</option>
             <option value="Transportation">Transportation</option>
@@ -150,27 +161,17 @@ const currencyArr = Object.keys(currencies);
             <option value="Souveneirs">Souveneirs</option>
             <option value="Other">Other</option>
             </select>
-            <br/><br/>
             
-            <label for="trip">Applies to Trip</label><br />
+            <label for="trip" className="trip-button">Applies to Trip: </label>
             <select id="trip" name="trip" onChange = {(e)=>setTripID(e.target.value)}>
                 <option value="">-</option>
                 {trips.map(t=>(
                     <option value={t.id}>{t.destination} {t.name}</option>
                 ))}
             </select><br />
-
-            <label for="currency">Currency</label><br />
-            <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
-            <option value="">-</option>
-            {currencyArr.map((ans) => {
-                    return (
-                    <option value={ans}>{ans}</option>
-                    )
-                    })}
-            </select><br />
-
+           
             <br /><input type = "submit" className="btn btn-primary" onClick={submitTransaction}/>
         </form>
+        </Card>
     </div>
 );}
