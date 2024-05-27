@@ -128,7 +128,7 @@ export default function TripByID(props) {
                 <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
 {/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
                 <td><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}><Update/></Button>
-                <Button className="btn btn-outline-secondary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}><DeleteForever/></Button></td>
+                <Button className="btn btn-outline-secondary trip-button" size="sm" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}><DeleteForever/></Button></td>
             </tr>
             ))}
                 <tr>

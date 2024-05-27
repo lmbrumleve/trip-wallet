@@ -139,9 +139,9 @@ const currencyArr = Object.keys(currencies);
             <input type = "text" name = "description" id="description" onChange = {(e)=>setDescription(e.target.value)} /><br />
 
             <label for="amount" className="trip-button">Transaction Amount: </label>
-            <input type = "text" name = "amount" id="amount" onChange = {(e)=>setAmount(e.target.value)} /><br />
+            <input type = "text" name = "amount" id="amount" onChange = {(e)=>setAmount(e.target.value)} />
             
-                        <label for="currency" className="trip-button">Currency: </label>
+            <label for="currency" className="trip-button"></label>
             <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
             <option value="">-</option>
             {currencyArr.map((ans) => {
@@ -158,10 +158,10 @@ const currencyArr = Object.keys(currencies);
             <option value="Food">Food</option>
             <option value="Lodging">Lodging</option>
             <option value="Recreation">Recreation</option>
-            <option value="Souveneirs">Souveneirs</option>
+            <option value="Souveneirs">Souvenirs</option>
             <option value="Other">Other</option>
             </select>
-            
+            <br/>
             <label for="trip" className="trip-button">Applies to Trip: </label>
             <select id="trip" name="trip" onChange = {(e)=>setTripID(e.target.value)}>
                 <option value="">-</option>
