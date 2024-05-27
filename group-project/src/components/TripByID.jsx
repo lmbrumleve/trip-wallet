@@ -11,6 +11,7 @@ import TransactionsPercentSpentDoughnut from "./TransactionsPercentSpentDoughnut
 import { Doughnut } from "react-chartjs-2"
 import { DeleteForever, Update } from "@mui/icons-material"
 import AddIcon from '@mui/icons-material/Add';
+import { enUS } from "date-fns/locale"
 
 export default function TripByID(props) {
 
@@ -116,8 +117,8 @@ export default function TripByID(props) {
                 <td>{ans.name}</td>
                 <td>{ans.description}</td>
                 <td>{ans.budgetCategory}</td>
-                <td>{ans.amount} {ans.currency}</td>
-                <td>{ans.convertedAmount} {userDefaultCurrency}</td>
+                <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
+                <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
 {/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
                 <button className="btn btn-secondary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}><Update/></button>
                 <button className="btn btn-outline-secondary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}><DeleteForever/></button>
@@ -130,7 +131,7 @@ export default function TripByID(props) {
                     <td></td>
                     <td></td>
 
-                    <td className="bold-font">Total Spent: {totalSpent} {userDefaultCurrency}</td>
+                    <td className="bold-font">Total Spent: {totalSpent.toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
                 </tr>
         </table>
         </Card>

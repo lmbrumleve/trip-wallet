@@ -37,7 +37,7 @@ export default function TransactionAdd() {
 
     useEffect(() => {
         fetchTransactionExchangeRate();
-        setConvertedAmount(amount*transactionExchangeRate);
+        setConvertedAmount(amount*transactionExchangeRate); //this is where to format the converted amount before it goes into the database
     })
         
     const submitTransaction=(e)=>{
@@ -124,6 +124,9 @@ const currencyArr = Object.keys(currencies);
     return(
     <div>
         <NavBar/>
+        <br/>
+        <br/>
+        <br/>
 <h1>Create New Transaction</h1>
 <hr/>
         <form method="POST">

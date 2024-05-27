@@ -6,6 +6,9 @@ import TripProfileCard from "./components/TripProfileCard.jsx";
 export default function MyTrips() { return(
     <>
         <NavBar/>
+        <br/>
+        <br/>
+        <br/>
         <h1>My Trips</h1>
         <TripProfileCard/>
         <br/>

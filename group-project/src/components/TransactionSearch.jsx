@@ -8,6 +8,7 @@ import { Checkbox, FormControlLabel } from "@mui/material"
 import { Star, StarBorder } from "@mui/icons-material"
 import { yellow } from "@mui/material/colors"
 import checked from "@mui/material/Checkbox";
+import { enUS } from "date-fns/locale"
 
 
 
@@ -122,6 +123,9 @@ console.log(checkedState)
     return (
     <div>
         <NavBar/>
+        <br/>
+        <br/>
+        <br/>
         <Card className="shadow">
         <h1>Search Transactions</h1>
         <hr/>
@@ -147,8 +151,8 @@ console.log(checkedState)
                 <th>Note</th>
                 <th>Trip</th>
                 <th>Category</th>
-                <th>Amount</th>
-                <th>Converted Amount</th>
+                <th>Amount (Local)</th>
+                <th>Amount (USD)</th>
                 <th></th>
             </tr>
 
@@ -159,8 +163,8 @@ console.log(checkedState)
                 <td>{a.description}</td>
                 <td><Link to={`/trips/ID/${a.trip.id}`}>{a.trip.destination} ({a.trip.name})</Link></td>
                 <td>{a.budgetCategory}</td>
-                <td>{a.amount} {a.currency}</td>
-                <td>{a.convertedAmount} {a.userDefaultCurrency}</td>
+                <td>{(a.amount).toLocaleString(enUS, {style: "currency", currency: a.currency})} </td>
+                <td>{(a.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
                 <td>                    
                     <FormControlLabel
                             control = {

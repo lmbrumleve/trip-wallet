@@ -14,6 +14,7 @@ import { DeleteForever } from "@mui/icons-material";
 import { Button, Card } from "react-bootstrap";
 import { pink, yellow } from "@mui/material/colors";
 import AddIcon from '@mui/icons-material/Add';
+import { enUS } from "date-fns/locale";
 
 
 export default function Transactions(props) {
@@ -137,9 +138,6 @@ console.log(totalSpent)
             <br/>
             <br/>
             <br/>
-            <br/>
-            <br/>
-            <br/>
 
             <Card>
             <Button to="/transactions/add" size="sm" className="position-top-right btn btn-outline-primary transaction-button"><AddIcon/></Button>
@@ -155,8 +153,8 @@ console.log(totalSpent)
                     <th>Note</th>
                     <th>Trip</th>
                     <th>Category</th>
-                    <th>Amount</th>
-                    <th>Amount ({userDefaultCurrency})</th>
+                    <th>Amount (Local)</th>
+                    <th>Amount (USD)</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -168,8 +166,8 @@ console.log(totalSpent)
                     <td>{ans.description}</td>
                     <td><Link to={`/trips/ID/${ans.trip.id}`}>{ans.trip.destination} ({ans.trip.name})</Link></td>
                     <td>{ans.budgetCategory}</td>
-                    <td>{ans.amount} {ans.currency}</td>
-                    <td>{ans.convertedAmount} {userDefaultCurrency}</td>
+                    <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
+                    <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
                     <td><button className="btn btn-secondary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></button></td>
                     <td><button className="btn btn-outline-secondary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></button></td>
                     <td>
@@ -197,7 +195,7 @@ console.log(totalSpent)
                     <td></td>
                     <td></td>
 
-                    <td className="bold-font">Total Spent: {totalSpent} {userDefaultCurrency}</td>
+                    <td className="bold-font">Total Spent: {totalSpent.toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
                 </tr>
 
             </table>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Header from "./Header.jsx"
 import NavBar from "./NavBar.jsx";
 import axios, { Axios } from "axios";
+import { enUS } from "date-fns/locale";
 
 
     export default function convertTransactions(props){
@@ -11,11 +12,12 @@ import axios, { Axios } from "axios";
         const[currencies, setCurrencies] = useState([])
         const [exchangeRates, setExchangeRates] = useState([])
         const [convertedAmount, setConvertedAmount] = useState(0)
+        const [amount, setAmount] = useState(0)
 
         const [conversionInputs, setConversionInputs] = useState({
             amount: 0,
-            start: "",
-            end: "",
+            start: "USD",
+            end: "USD",
         });
 
         const fetchExchangeRates = async () => {
@@ -45,6 +47,7 @@ import axios, { Axios } from "axios";
         }
 
 useEffect (()=>{
+        setAmount(conversionInputs.amount.toLocaleString(enUS, {style: "currency", currency: conversionInputs.start}))
         setConvertedAmount(conversionInputs.amount * rate);
     }, [conversionInputs, rate])
 
@@ -106,7 +109,7 @@ const currencyArr = Object.keys(currencies);
 
                 </form>
                 <br/>
-                <h2> {conversionInputs.amount} {conversionInputs.start} turns into {convertedAmount} {conversionInputs.end} </h2>
+                <h2> {amount} {conversionInputs.start} turns into {convertedAmount.toLocaleString(enUS, {style: "currency", currency: conversionInputs.end})}  </h2>
             </>
         )
     }
