@@ -13,6 +13,7 @@ export default function transactionUpdate() {
     const { id } = useParams();
     console.log(data);
     const [tempId, setTempId] = useState(location.state.tripId);
+    console.log(tempId)
     const [transaction, setTransaction] = useState({
         id: id,
         name: "",

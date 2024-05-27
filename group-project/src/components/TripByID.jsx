@@ -4,12 +4,12 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
 import { format } from "date-fns"
 import TotalTransactionsChart from "./TotalTransactionsChart.jsx"
-import { Card } from "react-bootstrap"
+import { Button, Card, Table } from "react-bootstrap"
 import { Box } from "@mui/material"
 import TransactionsByCategoryDoughnut from "./TransactionsByCategoryDoughnut.jsx"
 import TransactionsPercentSpentDoughnut from "./TransactionsPercentSpentDoughnut.jsx"
 import { Doughnut } from "react-chartjs-2"
-import { DeleteForever, Update } from "@mui/icons-material"
+import { CenterFocusStrong, DeleteForever, Update } from "@mui/icons-material"
 import AddIcon from '@mui/icons-material/Add';
 import { enUS } from "date-fns/locale"
 
@@ -89,6 +89,8 @@ export default function TripByID(props) {
       padding: "32px 64px",
       gap: "16px",
     }}
+    className="d-flex justify-content-center"
+
     >
 
         <Card>
@@ -100,8 +102,8 @@ export default function TripByID(props) {
         </Box>
         <Card>
             <h2>Transactions</h2>
-            <hr/>
-        <table>
+        <Table striped  hover>
+            <thead>
             <tr>
                 <th>Date</th>
                 {/* <th>Item</th> */}
@@ -109,33 +111,39 @@ export default function TripByID(props) {
                 <th>Category</th>
                 <th>Amount (Local)</th>
                 <th>Amount ({userDefaultCurrency})</th>
+                <th></th>
             </tr>
+            </thead>
+
+            <tbody>
 
             {transactions.map(ans=>(
             <tr>
                 <td>{format(ans.date, 'P')}</td>
                 {/* <td>{ans.name}</td> */}
-                <td>Payment to {ans.name} 
-                <br/>
+                <td className="text-start"><p className="fw-bold text-nowrap">Payment to {ans.name} </p>
                 {ans.description}</td>
                 <td>{ans.budgetCategory}</td>
                 <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
                 <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
 {/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
-                <button className="btn btn-secondary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}><Update/></button>
-                <button className="btn btn-outline-secondary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}><DeleteForever/></button>
+                <td><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}><Update/></Button>
+                <Button className="btn btn-outline-secondary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}><DeleteForever/></Button></td>
             </tr>
             ))}
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td className="bold-font">Total Spent: </td>
 
-                    <td className="bold-font">Total Spent: {totalSpent.toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+
+                    <td className="bold-font">{totalSpent.toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+                    <td></td>
+                    <td></td>
                 </tr>
-        </table>
+                </tbody>
+        </Table>
         </Card>
             <br/>
         <Link to="/myTrips" className="btn btn-primary trip-button">Back to all trips</Link>

@@ -11,10 +11,11 @@ import checked from "@mui/material/Checkbox";
 import { set } from "date-fns/fp/set";
 import { format } from "date-fns";
 import { DeleteForever } from "@mui/icons-material";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Table } from "react-bootstrap";
 import { pink, yellow } from "@mui/material/colors";
 import AddIcon from '@mui/icons-material/Add';
 import { enUS } from "date-fns/locale";
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 export default function Transactions(props) {
@@ -81,7 +82,8 @@ export default function Transactions(props) {
                 Authorization: 'Bearer ' + localStorage.getItem('token')}
             }).then(()=>console.log("transaction deleted"))}
             deleteTransaction(id);
-    }
+            window.location.reload(true);
+        }
 
     const handleUpdate = (e,id,name,description,amount,currency) =>{
         e.preventDefault();
@@ -143,34 +145,28 @@ console.log(totalSpent)
             <Button to="/transactions/add" size="sm" className="position-top-right btn btn-outline-primary transaction-button"><AddIcon/></Button>
 
             <h1>Transaction History</h1>
-            <hr/>
+            {/* <hr/> */}
             <br/>
 
-            <table>
+            <Table striped  hover>
+                <thead>
                 <tr>
+                <th></th>
+
                     <th>Date</th>
-                    <th>Transaction</th>
-                    <th>Note</th>
+                    <th>Description</th>
                     <th>Trip</th>
                     <th>Category</th>
                     <th>Amount (Local)</th>
                     <th>Amount (USD)</th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+
                 </tr>
+                </thead>
+                <tbody>
                 {transactions.map((ans)=>(
                 <tr>
-                    <td>{format(ans.date, "P")}</td>
-                    <td>{ans.name}</td>
-                    <td>{ans.description}</td>
-                    <td><Link to={`/trips/ID/${ans.trip.id}`}>{ans.trip.destination} ({ans.trip.name})</Link></td>
-                    <td>{ans.budgetCategory}</td>
-                    <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
-                    <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
-                    <td><button className="btn btn-secondary trip-button" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></button></td>
-                    <td><button className="btn btn-outline-secondary trip-button" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></button></td>
-                    <td>
+                                        <td>
                     <FormControlLabel
                             control = {
                                 <Checkbox value={checked[ans.id]}
@@ -185,6 +181,16 @@ console.log(totalSpent)
                               }
                         />
                     </td>
+                    <td>{format(ans.date, "P")}</td>
+                    <td className="text-start"><p className="fw-bold text-nowrap">Payment to {ans.name} </p>
+                {ans.description}</td>
+                    <td><Link to={`/trips/ID/${ans.trip.id}`}>{ans.trip.destination} ({ans.trip.name})</Link></td>
+                    <td>{ans.budgetCategory}</td>
+                    <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
+                    <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+                    <td><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></Button>
+                    <Button className="btn btn-outline-secondary trip-button" size="sm" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></Button></td>
+
                 </tr>
                 ))}
                 <tr>
@@ -192,13 +198,12 @@ console.log(totalSpent)
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td className="bold-font">Total Spent: </td>
 
-                    <td className="bold-font">Total Spent: {totalSpent.toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+                    <td className="bold-font">{totalSpent.toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
                 </tr>
-
-            </table>
+                </tbody>
+            </Table>
             </Card>
             <br/>
             <Link to="/transactions/search" className="btn btn-primary trip-button">Search Transactions</Link>

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import NavBar from './components/NavBar';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 export default function Login() {
+    const navigate = useNavigate();
+
+
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -17,16 +20,22 @@ export default function Login() {
         }));
     };
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/login', formData);
-            localStorage.setItem("token", response.data['token']);
+            const response = await axios.post('http://localhost:8080/login', formData)
+            localStorage.setItem("token", response.data['token'])
             console.log(localStorage.getItem('token'));
         } catch (error) {
             console.error('Login failed:', error);
         }
+        navigate("/")
     };
+
+   
+
+    
 
     return (
         <>

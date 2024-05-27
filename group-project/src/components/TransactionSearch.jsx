@@ -2,10 +2,10 @@ import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
 import NavBar from "./NavBar.jsx"
 import { Link, useNavigate } from "react-router-dom"
-import { Card } from "react-bootstrap"
+import { Button, Card, Table } from "react-bootstrap"
 import { format } from "date-fns"
 import { Checkbox, FormControlLabel } from "@mui/material"
-import { Star, StarBorder } from "@mui/icons-material"
+import { DeleteForever, Star, StarBorder, Update } from "@mui/icons-material"
 import { yellow } from "@mui/material/colors"
 import checked from "@mui/material/Checkbox";
 import { enUS } from "date-fns/locale"
@@ -118,6 +118,18 @@ console.log(checkedState)
       }
     
       console.log(transactions)
+    //   const handleDelete = async (e,id, tripId) =>{
+    //     e.preventDefault();
+    //     console.log(id);
+    //      const deleteTransaction = async (id)=>{
+    //         await fetch("http://localhost:8080/transactions/" + id,{
+    //             method:"DELETE",
+    //             headers:{"Content-Type":"application/json",
+    //             Authorization: 'Bearer ' + localStorage.getItem('token')}
+    //         }).then(()=>console.log("transaction deleted"))}
+    //         deleteTransaction(id);
+    //         window.location.reload(true);
+    //     }
 
 
     return (
@@ -143,29 +155,25 @@ console.log(checkedState)
 
 <Card className="shadow">
 <h3>Results for Search Term: {q}</h3>
-        <hr />
-        <table>
+<br/>
+        <Table striped  hover >
+            <thead>
             <tr>
+                <th></th>
                 <th>Date</th>
-                <th>Transaction</th>
-                <th>Note</th>
+                <th>Description</th>
                 <th>Trip</th>
                 <th>Category</th>
                 <th>Amount (Local)</th>
                 <th>Amount (USD)</th>
                 <th></th>
             </tr>
+            </thead>
 
+            <tbody>
             {ans.map(a=>(
             <tr>
-                <td>{format(a.date, "P")}</td>
-                <td>{a.name}</td>
-                <td>{a.description}</td>
-                <td><Link to={`/trips/ID/${a.trip.id}`}>{a.trip.destination} ({a.trip.name})</Link></td>
-                <td>{a.budgetCategory}</td>
-                <td>{(a.amount).toLocaleString(enUS, {style: "currency", currency: a.currency})} </td>
-                <td>{(a.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
-                <td>                    
+                                <td>                    
                     <FormControlLabel
                             control = {
                                 <Checkbox value = {checked[a.id]}
@@ -180,9 +188,21 @@ console.log(checkedState)
                     }
                     />
                 </td>
+                <td>{format(a.date, "P")}</td>
+                <td className="text-start"><p className="fw-bold text-nowrap">Payment to {a.name} </p>
+                {a.description}</td>
+                <td><Link to={`/trips/ID/${a.trip.id}`}>{a.trip.destination} ({a.trip.name})</Link></td>
+                <td>{a.budgetCategory}</td>
+                <td>{(a.amount).toLocaleString(enUS, {style: "currency", currency: a.currency})} </td>
+                <td>{(a.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+
+                <td><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></Button>
+                    <Button className="btn btn-outline-secondary trip-button" size="sm" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></Button></td>
+
             </tr>
             ))}
-        </table>
+            </tbody>
+        </Table>
         </Card>
     </div>
     );
