@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import UpdateIcon from '@mui/icons-material/Update';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
+import { enUS } from 'date-fns/locale';
 
 
 export default function ProfileCard() {
@@ -67,8 +68,8 @@ const handleUpdate = (e,id)=>{
       <Card.Text>
       {trip.name}
       </Card.Text>
-      <Card.Text>{format(trip.startDate, 'MMM d, yyy')} ({trip.duration} days)</Card.Text>
-
+      <Card.Text>Leaving {format(trip.startDate, 'MMM d, yyy')} for {trip.duration} days</Card.Text>
+      <Card.Text>{(trip.budget).toLocaleString(enUS, {style: "currency", currency: "USD"})} USD</Card.Text>
       {/* <Card.Text>      Trip duration: {trip.duration} days */}
 {/* </Card.Text> */}
       {/* <Card.Text>

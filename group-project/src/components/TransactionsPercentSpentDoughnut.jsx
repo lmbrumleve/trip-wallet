@@ -1,3 +1,5 @@
+import { plugins } from 'chart.js';
+import { enUS } from 'date-fns/locale';
 import React, { useEffect, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useParams } from 'react-router-dom';
@@ -16,6 +18,15 @@ export default function TransactionsPercentSpentDoughnut() {
   const userDefaultCurrency = "USD";
   const {ID} = useParams();
 
+  const options =    {
+  plugins: {
+    datalabels: {
+      formatter: (value, context) => {
+        return context + ': ' + value.toLocaleString(enUS, {style: "currency", currency: "USD"})
+      }
+    }
+  }
+  }
 
   useEffect(()=>{
       // console.log(typeof ID)
@@ -61,6 +72,7 @@ useEffect (() => {
                 }
               ]
             }}
+            options={options}
         />
         <br/>
             <h5>Total Trip Budget: {trip.budget} {userDefaultCurrency}</h5>
