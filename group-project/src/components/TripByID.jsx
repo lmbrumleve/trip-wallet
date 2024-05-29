@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import NavBar from "./NavBar.jsx"
 import { format } from "date-fns"
-import TotalTransactionsChart from "./TotalTransactionsChart.jsx"
 import { Button, Card, Table } from "react-bootstrap"
 import { Box } from "@mui/material"
 import TransactionsByCategoryDoughnut from "./TransactionsByCategoryDoughnut.jsx"
