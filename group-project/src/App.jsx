@@ -3,7 +3,6 @@ import { RouterProvider } from 'react-router-dom'
 import NavBar from './components/NavBar';
 import UserDashboard from './UserDashboard';
 import Error404 from './components/Error404';
-import Test from './components/Test';
 import Transactions from './Transactions';
 import TransactionDisplayByID from './components/TransactionDisplayByID';
 import TransactionAdd from './components/TransactionAdd';

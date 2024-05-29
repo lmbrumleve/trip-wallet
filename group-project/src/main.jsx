@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import './index.css'
 import UserDashboard from "./UserDashboard.jsx"
-import Test from "./components/Test.jsx"
 import Error404 from "./components/Error404.jsx"
 import Transactions from "./Transactions.jsx"
 import TransactionDisplayByID from "./components/TransactionDisplayByID.jsx"
@@ -44,10 +43,7 @@ const router = createBrowserRouter([
         errorElement: <Error404 />
 },
 
-    {
-        path: "/test",
-        element: <Test />,
-    },
+
     {
         path: "/transactions",
         element: <Transactions />,

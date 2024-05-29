@@ -1,4 +1,3 @@
-import Header from "./Header.jsx"
 import React, { useEffect, useState } from 'react'
 import NavBar from "./NavBar.jsx"
 import { Link, useNavigate } from "react-router-dom"

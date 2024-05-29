@@ -1,6 +1,5 @@
 import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
-import Header from "./Header.jsx"
 import NavBar from "./NavBar.jsx";
 import axios, { Axios } from "axios";
 import { enUS } from "date-fns/locale";

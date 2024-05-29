@@ -1,6 +1,5 @@
 import { useNavigate,Link,Outlet } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
-import Header from "./components/Header.jsx"
 import NavBar from "./components/NavBar.jsx"
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
