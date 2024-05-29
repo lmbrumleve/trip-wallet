@@ -69,13 +69,14 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
          const response = await fetch("http://localhost:8080/transactions/searchByTripID?ID=" + id,{
               headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}).then((res)=>res.json())
           console.log(response);
-          deleteTripTransactions(response);
+          deleteTripTransactions(response).then(deleteTrip(id));
+          
           }
 
       fetchTripTransactions(id);
       //deleteTripTransactions(response);
       deleteTrip(id);
-      deleteTrip(id);
+    //   deleteTrip(id);
 
       navigate("/myTrips");
   }
@@ -83,12 +84,15 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
     return(
     <>
         <NavBar/>
+        <br/>
+        <br/>
+        <br/>
 
         <h2>Update Trip {id}</h2>
 <Card className="shadow">
         <form method="PUT">
 
-            <label for="name">Trip Purpose</label><br />
+            <label for="name" className='trip-button'>Trip Purpose: </label>
             {/* <input type="text" name="name" value={trip.name} id="name" onChange = {(e)=>handleChange(e)}/><br /> */}
             <select id="name" name="name" onChange = {(e)=>handleChange(e)}>
             <option value="">{trip.name}</option>
@@ -99,15 +103,15 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
             <br/>
 
 
-            <label for="destination">Destination</label><br />
+            <label for="destination" className='trip-button'>Destination: </label>
             <input type="text" name="destination" value={trip.destination} id="destination" onChange = {(e)=>handleChange(e)}/><br />
 
-            <label for="budget">Budget</label><br />
+            <label for="budget" className='trip-button'>Budget: </label>
             <input type="text" name="budget" value={trip.budget} id="budget" onChange = {(e)=>handleChange(e)}/><br />
 
-            <label for="startDate">Start Date:</label><br />
+            <label for="startDate" className='trip-button'>Start Date:</label>
 
-            <label for="endDate">End Date:</label><br />
+            <label for="endDate" className='trip-button'>End Date: </label><br />
 
 
             <br />
