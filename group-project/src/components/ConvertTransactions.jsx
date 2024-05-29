@@ -40,7 +40,8 @@ import { enUS } from "date-fns/locale";
             let ratesKey = conversionInputs.end
             console.log(exchangeRates)
             console.log(exchangeRates[`${ratesKey}`])
-            setRate(exchangeRates[`${ratesKey}`])
+            if (conversionInputs.start !== conversionInputs.end) {setRate(exchangeRates[`${ratesKey}`])}
+            if (conversionInputs.start === conversionInputs.end) {setRate(1)}
             console.log(conversionInputs)
 
         }
