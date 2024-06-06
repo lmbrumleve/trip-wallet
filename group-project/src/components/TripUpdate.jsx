@@ -8,8 +8,11 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
 
     export default function tripUpdate(){
 
-    const navigate = useNavigate();
-    const { id } = useParams();
+        const location = useLocation();
+        const navigate = useNavigate();
+        const data = location.state;
+        const { id } = useParams();
+        console.log(data);
     const [trip, setTrip] = useState({
         id: "",
         name: "",

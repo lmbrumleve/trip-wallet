@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import NavBar from "./NavBar.jsx";
 import Axios from "axios";
+import { Card } from 'react-bootstrap';
 // import {useForm} from 'react-hook-form'
 
-export default function transactionUpdate() {
+export default function transactionUpdate(props) {
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ export default function transactionUpdate() {
     console.log(data);
     const [tempId, setTempId] = useState(location.state.tripId);
     console.log(tempId)
+    const[convertedAmount, setConvertedAmount] =useState([]);
+
     const [transaction, setTransaction] = useState({
         id: id,
         name: "",
@@ -20,8 +23,15 @@ export default function transactionUpdate() {
         amount: 0,
         currency: "",
         trip: location.state.tripId,
+        convertedAmount: 0
     });
     const [currency, setCurrency] = useState({});
+    const [exchangeRates, setExchangeRates] = useState("");
+    const [currencyExchangeRates, setCurrencyExchangeRates] = useState([]);
+
+    const userDefaultCurrency = "USD"
+
+    console.log(transaction)
 
     useEffect(()=>{
 
@@ -40,7 +50,7 @@ export default function transactionUpdate() {
             console.log(transaction);
     }, []);
 
-//FETCH CURRENCIES:
+//fetch currencies:
 const fetchCurrency = async () => {
     try{
         const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrency(result);})
@@ -58,37 +68,75 @@ useEffect(() => {
 console.log(Object.keys(currency));
 const currencyArr = Object.keys(currency);
 
+//fetch exchange rates:
+  const fetchExchangeRates = async () => {
+    await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+        setExchangeRates(res.data.rates);
+    });
+};
+
+    useEffect(() => {
+        fetchExchangeRates();
+    }, []);
+
+    useEffect(() => {
+      setCurrencyExchangeRates(Object.keys(exchangeRates));
+
+    }, [exchangeRates])
+
+    useEffect(() => {
+        setConvertedAmount();
+    })
+
+    console.log(exchangeRates)
+    console.log(transaction)
+
+    // useEffect (()=>{
+    //     setAmount(conversionInputs.amount.toLocaleString(enUS, {style: "currency", currency: conversionInputs.start}))
+    //     setConvertedAmount(conversionInputs.amount * rate);
+    // }, [conversionInputs, rate])
+
 
       const updateTransaction = (e) => {
         e.preventDefault();
+        // console.log(transaction.convertedAmount)
+        // let currencyCode = transaction.currency
+        // setConvertedAmount(2)
+        // // transaction.convertedAmount = convertedAmount;
+        // console.log(convertedAmount)
+
         setTempId(transaction.trip);
         fetch("http://localhost:8080/transactions/update/" + id, {
             method: "PUT",
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')},
             body:JSON.stringify(transaction)
-        }).then((response)=>{
-            navigate('/trips/ID/' + tempId);
+        // }).then((response)=>{
+        //     navigate('/trips/ID/' + tempId);
         }).catch((error)=>{
             console.log(error);
         })
       };
-
+console.log(transaction)
       const handleChange = (e) => {
         const value = e.target.value;
         setTransaction({ ...transaction, [e.target.name]: value });
       };
-        
+      console.log(transaction)
+
    
 
 
     return(
         <div>
             <NavBar/>
+            <br/>
+            <br/>
+            <br/>
 
             {/* <div>{location.state.transactionId} and {location.state.name}</div> */}
-
-            <h2>Update Transaction : {location.state.transactionId}</h2>
+            <Card className='shadow'>
+            <h2>Update Transaction: {location.state.name}</h2>
 
             <form method="PUT">
 
@@ -114,6 +162,7 @@ const currencyArr = Object.keys(currency);
                 <br /><input className="btn btn-primary trip-button" type="submit" value="Update Transaction" onClick= {updateTransaction}/>
 
             </form>
+            </Card>
         </div>
     )
 }

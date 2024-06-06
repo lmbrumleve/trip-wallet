@@ -70,11 +70,7 @@ const handleUpdate = (e,id)=>{
       </Card.Text>
       <Card.Text>Leaving {format(trip.startDate, 'MMM d, yyy')} for {trip.duration} days</Card.Text>
       <Card.Text>{(trip.budget).toLocaleString(enUS, {style: "currency", currency: "USD"})} USD</Card.Text>
-      {/* <Card.Text>      Trip duration: {trip.duration} days */}
-{/* </Card.Text> */}
-      {/* <Card.Text>
-        {format(trip.startDate, 'P')} - {format(trip.endDate, 'P')}
-      </Card.Text> */}
+
         <Link className="btn btn-primary" to={`/trips/ID/${trip.id}`}>View Trip Profile</Link>
     </Card.Body>
   </Card>

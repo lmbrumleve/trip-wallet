@@ -37,7 +37,7 @@ export default function TransactionAdd() {
 
     useEffect(() => {
         fetchTransactionExchangeRate();
-        setConvertedAmount(amount*transactionExchangeRate); //this is where to format the converted amount before it goes into the database
+        setConvertedAmount(amount*transactionExchangeRate); 
     })
         
     const submitTransaction=(e)=>{
