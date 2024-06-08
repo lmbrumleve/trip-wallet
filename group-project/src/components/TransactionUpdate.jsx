@@ -91,20 +91,12 @@ const currencyArr = Object.keys(currency);
     console.log(exchangeRates)
     console.log(transaction)
 
-    // useEffect (()=>{
-    //     setAmount(conversionInputs.amount.toLocaleString(enUS, {style: "currency", currency: conversionInputs.start}))
-    //     setConvertedAmount(conversionInputs.amount * rate);
-    // }, [conversionInputs, rate])
 
-
-      const updateTransaction = (e) => {
+    const updateTransaction = (e) => {
         e.preventDefault();
-        // console.log(transaction.convertedAmount)
-        // let currencyCode = transaction.currency
-        // setConvertedAmount(2)
-        // // transaction.convertedAmount = convertedAmount;
-        // console.log(convertedAmount)
 
+        transaction.convertedAmount = transaction.amount/exchangeRates[(transaction.currency)];
+      
         setTempId(transaction.trip);
         fetch("http://localhost:8080/transactions/update/" + id, {
             method: "PUT",
@@ -121,6 +113,7 @@ console.log(transaction)
       const handleChange = (e) => {
         const value = e.target.value;
         setTransaction({ ...transaction, [e.target.name]: value });
+        transaction.convertedAmount = 2;
       };
       console.log(transaction)
 
