@@ -95,19 +95,20 @@ const currencyArr = Object.keys(currency);
     const updateTransaction = (e) => {
         e.preventDefault();
 
-        transaction.convertedAmount = transaction.amount/exchangeRates[(transaction.currency)];
-      
-        setTempId(transaction.trip);
+        transaction.convertedAmount = Number(transaction.amount/exchangeRates[(transaction.currency)]);
+        console.log(transaction)
+        // setTempId(transaction.trip);
         fetch("http://localhost:8080/transactions/update/" + id, {
             method: "PUT",
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')},
             body:JSON.stringify(transaction)
-        // }).then((response)=>{
-        //     navigate('/trips/ID/' + tempId);
         }).catch((error)=>{
             console.log(error);
         })
+
+        
+        navigate("/trips/ID/" + transaction.trip.id)
       };
 console.log(transaction)
       const handleChange = (e) => {

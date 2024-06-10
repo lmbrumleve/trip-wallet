@@ -20,6 +20,7 @@ public class TransactionServiceImpl implements TransactionService{
             transaction1.setDescription((transaction.getDescription()));
             transaction1.setAmount(transaction.getAmount());
             transaction1.setCurrency(transaction.getCurrency());
+            transaction1.setConvertedAmount(transaction.getConvertedAmount());
             transactionRepository.save(transaction1);
     ;}
 
