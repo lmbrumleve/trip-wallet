@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import NavBar from "./NavBar.jsx";
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserRegistration() {
     const [formData, setFormData] = useState({
@@ -9,10 +10,11 @@ export default function UserRegistration() {
         password: '',
         firstName: '',
         lastName: '',
-        role: ''
+        role: 'USER'
     });
 
-    
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevstate => ({
@@ -37,6 +39,8 @@ export default function UserRegistration() {
                 localStorage.setItem("token", result['token']);
                 console.log(localStorage.getItem('token'));
                 console.log(result['token']);
+
+                navigate("/")
             })
 
 //
@@ -44,6 +48,7 @@ export default function UserRegistration() {
 //             console.log(response.data);
         } catch (error) {
             console.error('Registration failed:', error);
+            alert("Registration failed. Please try again.")
         }
     };
 
@@ -68,11 +73,11 @@ export default function UserRegistration() {
             </div>
             <br />
 
-            <div className="form-group">
+            {/* <div className="form-group">
                 <label htmlFor="role">Role</label>
                 <input type="text" className="form-control" id="role" name="role" value={formData.role} onChange={handleChange} />
             </div>
-            <br />
+            <br /> */}
 
             <div className="form-group">
                 <label htmlFor="username">Username</label>

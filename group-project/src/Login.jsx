@@ -35,13 +35,14 @@ export default function Login() {
         }
     };
 
-   
-
-    
-
     return (
         <>
         <NavBar />
+        <br/>
+        <br/>
+        <br/>
+        <h1>Sign in to Trip Wallet</h1>
+        <br/>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
@@ -53,7 +54,7 @@ export default function Login() {
                     <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} required />
                 </div>
                 <br></br>
-                <button type="submit" className="btn btn-primary btn-lg">Login</button>
+                <button type="submit" className="btn btn-primary btn-lg">Sign In</button>
             </form>
             <br></br>
             <Link to="/register" className="btn btn-success btn-lg">Create an Account</Link>

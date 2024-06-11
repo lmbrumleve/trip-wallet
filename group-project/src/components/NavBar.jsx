@@ -20,17 +20,13 @@ export default class NavBar extends Component {
 
     render() {
 
-/*logout:
-window.localStorage.removeItem('jwtToken');
-router.push('/login');
-*/
-const handleLogout = () => {
-    console.log('a1');
-//  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // const navigate = useNavigate();
   // Remove JWT token from localStorage
-window.localStorage.removeItem("token");
+    window.localStorage.removeItem("token");
   // Navigates to the login page
-//navigate("/logout");
+  // navigate("/login")
 }
 
 
@@ -55,7 +51,7 @@ window.localStorage.removeItem("token");
               <NavDropdown.Item as={Link} to="/transactions/search">Search Transactions</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/profile">My Profile</NavDropdown.Item>
-              <NavDropdown.Item onClick={handleLogout}>
+              <NavDropdown.Item onClick={handleLogout} as={Link} to="/login">
                 Log Out
               </NavDropdown.Item>
             </NavDropdown>
