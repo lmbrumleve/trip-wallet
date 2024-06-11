@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from "./NavBar.jsx"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { Button, Card, Table } from "react-bootstrap"
 import { format } from "date-fns"
 import { Checkbox, FormControlLabel } from "@mui/material"
@@ -19,6 +19,7 @@ export default function TransactionSearch(){
     const [transactions, setTransactions] = useState([])
     const[transaction, setTransaction] = useState({})
     const[checkedState, setCheckedState] = useState([]);
+    const { ID } = useParams()
 
     const navigate = useNavigate();
 
@@ -117,6 +118,17 @@ console.log(checkedState)
       }
     
       console.log(transactions)
+
+      const handleUpdate = (e,id,name,description,amount,currency,tripId) =>{
+        e.preventDefault();
+    //route dom useNavigate with state variable to be used with useLocation in other page
+        navigate('/transactions/update/' + e.id, {state:{transactionId:e.id,name:e.name,description:e.description,amount:e.amount,currency:e.currency,tripId:tripId}})
+    }
+    const handleDelete = async (e,id,tripId) =>{
+        e.preventDefault();
+        console.log(e.id);
+        navigate('/transactions/delete/' + id, {state:{tripId:tripId}});
+    }
     //   const handleDelete = async (e,id, tripId) =>{
     //     e.preventDefault();
     //     console.log(id);

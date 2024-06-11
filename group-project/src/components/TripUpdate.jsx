@@ -19,6 +19,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
         destination: "",
         budget: 0,
     })
+        const userDefaultCurrency = "USD";
 
     useEffect(()=>{
 
@@ -110,7 +111,9 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
             <input type="text" name="destination" value={trip.destination} id="destination" onChange = {(e)=>handleChange(e)}/><br />
 
             <label for="budget" className='trip-button'>Budget: </label>
-            <input type="text" name="budget" value={trip.budget} id="budget" onChange = {(e)=>handleChange(e)}/><br />
+            <input type="text" name="budget" value={trip.budget} id="budget" onChange = {(e)=>handleChange(e)}/>
+            <label htmlFor="budget" className="trip-button bold-font"> {userDefaultCurrency}</label><br/>
+
 
             <label for="startDate" className='trip-button'>Start Date:</label>
 

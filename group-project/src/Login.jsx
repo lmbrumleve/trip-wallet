@@ -27,10 +27,12 @@ export default function Login() {
             const response = await axios.post('http://localhost:8080/login', formData)
             localStorage.setItem("token", response.data['token'])
             console.log(localStorage.getItem('token'));
+            navigate("/")
+
         } catch (error) {
             console.error('Login failed:', error);
+            alert("Invalid Login")
         }
-        navigate("/")
     };
 
    

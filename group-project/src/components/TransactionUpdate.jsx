@@ -31,8 +31,6 @@ export default function transactionUpdate(props) {
 
     const userDefaultCurrency = "USD"
 
-    console.log(transaction)
-
     useEffect(()=>{
 
         const fetchTransaction = async ()=>{
@@ -96,8 +94,7 @@ const currencyArr = Object.keys(currency);
         e.preventDefault();
 
         transaction.convertedAmount = Number(transaction.amount/exchangeRates[(transaction.currency)]);
-        console.log(transaction)
-        // setTempId(transaction.trip);
+
         fetch("http://localhost:8080/transactions/update/" + id, {
             method: "PUT",
             headers:{"Content-Type":"application/json",
@@ -110,15 +107,11 @@ const currencyArr = Object.keys(currency);
         
         navigate("/trips/ID/" + transaction.trip.id)
       };
-console.log(transaction)
+
       const handleChange = (e) => {
         const value = e.target.value;
         setTransaction({ ...transaction, [e.target.name]: value });
-        transaction.convertedAmount = 2;
       };
-      console.log(transaction)
-
-   
 
 
     return(
