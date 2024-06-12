@@ -56,7 +56,9 @@ export default function UserRegistration() {
     return(
     <div>
         <NavBar />
-
+        <br/>
+        <br/>
+        <br/>
         <h1>Create New Account</h1>
         <hr/>
         <br/>
