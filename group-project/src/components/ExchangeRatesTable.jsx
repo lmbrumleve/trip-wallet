@@ -25,6 +25,7 @@ export default function ExchangeRatesTable () {
   const[isLoading, setIsLoading] = useState(false);
   const[currencies, setCurrencies] = useState([]);
   const[favoriteByUsernameId, setFavoriteByUsernameId] = useState({});
+  const[currencyCodes, setCurrencyCodes] = useState({});
 
 
 //Use jwtDecode to get username from token in local storage
@@ -52,11 +53,54 @@ const fetchCurrencies = async () => {
 
 useEffect(() => {
       fetchCurrencies();
-}, []);
+}, []); 
 
 
 const currencyArr = Object.keys(currencies);
 console.log(currencyArr)
+
+const fetchCurrencyCodes = async () => {
+  try{
+  const response = await fetch("http://localhost:8080/currencyCode/getAll", {
+          headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+      }).then(res=>res.json()).then((result)=>{setCurrencyCodes(result);}) 
+              
+      } catch (error) {
+        console.error("Failed to fetch: ", error);
+      }
+    
+    }
+  
+    useEffect(() => {
+      fetchCurrencyCodes();
+    }, [])
+  
+    console.log(currencyCodes.length)
+
+const postCurrencyCodes = () => {
+
+if (currencyCodes.length === 0) { 
+for(let i=0; i<currencyArr.length; i++){
+
+fetch("http://localhost:8080/currencyCode/add", {
+
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json",
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      },
+        body:JSON.stringify({currencyCode: currencyArr[i]})
+    })
+  }
+}
+} 
+
+useEffect(() => {
+  postCurrencyCodes();
+}, [])
 
 //would be best to fetch user by username, then use the user id to fetch favorite rates by user
 
@@ -68,7 +112,7 @@ const response = await fetch("http://localhost:8080/favorite/entries", {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('token')
         }
-    }).then(res=>res.json()).then((result)=>{setFavoriteByUsername(result);})
+    }).then(res=>res.json()).then((result)=>{setFavoriteByUsername(result);}) 
             
     } catch (error) {
       console.error("Failed to fetch: ", error);

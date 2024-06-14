@@ -5,8 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
@@ -15,18 +14,28 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column (name = "first_name")
     private String firstName;
 
+    @Column (name = "last_name")
     private String lastName;
 
+    @Column (name = "username")
     private String username;
 
+    @Column (name = "password")
     private String password;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_currency_code",
+    joinColumns = {@JoinColumn (name = "user_id")},
+    inverseJoinColumns = { @JoinColumn (name = "currency_code_id")})
+    private Set<CurrencyCode> currencyCodes = new HashSet<>();
 
     public void setId(Integer id) {
         this.id = id;
@@ -107,5 +116,13 @@ public class User implements UserDetails {
 
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    public Set<CurrencyCode> getCurrencyCodes() {
+        return currencyCodes;
+    }
+
+    public void setCurrencyCodes(Set<CurrencyCode> currencyCodes) {
+        this.currencyCodes = currencyCodes;
     }
 }

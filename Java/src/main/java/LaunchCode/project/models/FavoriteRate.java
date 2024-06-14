@@ -3,6 +3,7 @@ package LaunchCode.project.models;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "favorite_rate")
 public class FavoriteRate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
