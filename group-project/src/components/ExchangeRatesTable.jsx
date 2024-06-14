@@ -61,7 +61,7 @@ console.log(currencyArr)
 //would be best to fetch user by username, then use the user id to fetch favorite rates by user
 
 //Get current data from favorite rates table in database (first time will be empty)
-const fetchFavoriteByUsername = async () => {
+const fetchFavoriteByUsername = async () => {  //Really this should be fetchFavoriteByUserID
 try{
 const response = await fetch("http://localhost:8080/favorite/entries", {
         headers: {
@@ -91,7 +91,8 @@ for (let i=0; i<currencyArr.length; i++){
     favoriteRate = {
         username: username,
         currencyCode: currencyArr[i], 
-        favorite: false
+        favorite: false,
+        // user
       };
       favoriteRateArr.push(favoriteRate);
     }
@@ -107,7 +108,7 @@ for(let i=0; i<currencyArr.length; i++){
 
 //if there is no data in the table, add the favoriteRateArr data to the favorite rates table in database
 //would be best to base this on the user id not on the username
-if(favoriteByUsername.length === 0){ 
+if(favoriteByUsername === undefined){ 
 
     fetch("http://localhost:8080/favorite/add", {
 

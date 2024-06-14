@@ -2,6 +2,9 @@ package LaunchCode.project.service;
 
 import LaunchCode.project.models.FavoriteRate;
 import LaunchCode.project.models.Transaction;
+import LaunchCode.project.models.User;
+import LaunchCode.project.repository.UserRepository;
+import LaunchCode.project.service.UserDetailsServiceImpl;
 import LaunchCode.project.repository.FavoriteRateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +13,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FavoriteRateServiceImpl implements FavoriteRateService{
+public class FavoriteRateServiceImpl implements FavoriteRateService  {
 
     @Autowired
     private FavoriteRateRepository favoriteRateRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    private UserDetailsServiceImpl userDetailsServiceImpl;
     @Override
     public void saveFavoriteRate(FavoriteRate favoriteRate) {
 //        System.out.println("reached");
@@ -21,6 +29,7 @@ public class FavoriteRateServiceImpl implements FavoriteRateService{
 //        System.out.println(count);
 ////        //TODO: for some reason the count is 32 in the table when I want it to be only 30 so this needs fixing
 //        if (count < 32) {
+
             favoriteRateRepository.save(favoriteRate);
 //        }
     }

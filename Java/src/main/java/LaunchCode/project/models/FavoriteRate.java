@@ -13,6 +13,18 @@ public class FavoriteRate {
 
     private Boolean favorite;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+//    public FavoriteRate(int ID, String currencyCode, String username, Boolean favorite, User user) {
+//        this.ID = ID;
+//        this.currencyCode = currencyCode;
+//        this.username = username;
+//        this.favorite = favorite;
+//        this.user = user;
+//    }
+
     public int getID() {
         return ID;
     }
@@ -41,8 +53,13 @@ public class FavoriteRate {
         this.favorite = favorite;
     }
 
+    public User getUser() {
+        return user;
+    }
 
-
-    //TODO: Which fields do I join to associate an ID from this table with an ID from the user table?
+    public void setUser(User user) {
+        this.user = user;
+    }
+//TODO: Which fields do I join to associate an ID from this table with an ID from the user table?
     //There will be many rates to one user, and many users to one rate. So @ManytoMany
 }
