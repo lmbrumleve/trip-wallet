@@ -25,6 +25,7 @@ public class FavoriteRateController {
     @GetMapping("/entries")
     public ResponseEntity<List<FavoriteRate>> getCurrentUsername(Authentication authentication) {
         String username = authentication.getName();
+        System.out.println(username);
         List<FavoriteRate> favoriteRates = favoriteRateService.findByUsername(username);
         return ResponseEntity.ok(favoriteRates);
     }

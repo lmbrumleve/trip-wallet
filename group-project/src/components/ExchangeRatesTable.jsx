@@ -21,7 +21,7 @@ export default function ExchangeRatesTable () {
   const [currencyExchangeRates, setCurrencyExchangeRates] = useState([]);
   const [username, setUsername] = useState({});
   const [favoriteByUsername, setFavoriteByUsername] = useState({})
-  const[checkedState, setCheckedState] = useState([]);
+  const[checkedState, setCheckedState] = useState([]); 
   const[isLoading, setIsLoading] = useState(false);
   const[currencies, setCurrencies] = useState([]);
   const[favoriteByUsernameId, setFavoriteByUsernameId] = useState({});
@@ -96,7 +96,7 @@ for (let i=0; i<currencyArr.length; i++){
       favoriteRateArr.push(favoriteRate);
     }
 console.log(favoriteRateArr)
-
+ 
 //Put favorite rates object in the favorite rates table in database initial time (if needed)
 console.log(favoriteByUsername.length)
 
