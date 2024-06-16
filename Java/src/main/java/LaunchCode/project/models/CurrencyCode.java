@@ -14,7 +14,7 @@ public class CurrencyCode {
     private int ID;
     private String currencyCode;
 
-    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currencyCodes")
+    @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currencyCodes")
     private Set<User> users = new HashSet<>();
 
 
