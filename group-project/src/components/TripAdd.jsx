@@ -87,6 +87,9 @@ export default function TripAdd() {
     return(
     <div>
         <NavBar/>
+        <br/>
+        <br/>
+        <br/>
         <Card>
         <h1>Create New Trip</h1>
 

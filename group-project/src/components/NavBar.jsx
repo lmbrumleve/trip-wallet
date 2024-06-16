@@ -49,6 +49,7 @@ export default class NavBar extends Component {
               <NavDropdown.Item as={Link} to="/transactions/add">New Transaction</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions">Transaction History</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/transactions/search">Search Transactions</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/trips/search">Search Trips</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/profile">My Profile</NavDropdown.Item>
               <NavDropdown.Item onClick={handleLogout} as={Link} to="/login">

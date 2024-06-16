@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import NavBar from "./NavBar"
+import { Card, Table } from 'react-bootstrap'
 
 
 export default function TripSearch(){
@@ -37,31 +38,39 @@ export default function TripSearch(){
     return (
     <div>
         <NavBar/>
+        <br/>
+        <br/>
+        <br/>
+        <Card className="shadow">
                 <h1>Search Trips</h1>
 
 <hr/>
 <br/>
         <input className="input-format" type="text" name = {q} onChange = {(e)=>setQ(e.target.value)} />
         <select className="input-format" name = {sel} value={sel} onChange = {(e)=>setSel(e.target.value)}>
-            <option value="name">Name of Trip</option>
+            <option value="name">Trip Purpose</option>
             <option value="destination">Destination of Trip</option>
             <option value="budget">Trip Budget</option>
         </select>
 
         <br />
         <button className="btn btn-primary trip-button" onClick = {searchTrip}>Search</button>
-        <br />
-        <br />
+        </Card>
+        <br/>
+    <Card className="shadow">
 
-        <hr />
-        <table>
+    <h3>Results for Search Term: {q}</h3>
+    <br/>
+        <Table striped hover>
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Destination</th>
                 <th>Budget</th>
             </tr>
-
+            </thead>
+            <tbody>
             {ans.map(ans1=>(
             <tr>
                 <td>{ans1.id}</td>
@@ -70,7 +79,9 @@ export default function TripSearch(){
                 <td>{ans1.budget}</td>
             </tr>
             ))}
-        </table>
+            </tbody>
+        </Table>
+        </Card>
     </div>
     );
 }
