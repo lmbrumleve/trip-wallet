@@ -10,9 +10,11 @@ public class Favorite {
     private int ID;
 
     @ManyToOne
+    @JoinColumn(name="currency_codes_id")
     private CurrencyCode currencyCode;
 
     @ManyToOne
+    @JoinColumn(name="user_id")
     private User user;
 
     private Boolean favorite;
@@ -37,14 +39,14 @@ public class Favorite {
     public void setCurrencyCode(CurrencyCode currencyCode) {
         this.currencyCode = currencyCode;
     }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     public Boolean getFavorite() {
         return favorite;

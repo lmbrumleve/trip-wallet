@@ -18,5 +18,14 @@ public class CurrencyCodeServiceImpl implements CurrencyCodeService{
     }
 
     @Override
-    public void saveCurrencyCode (CurrencyCode currencyCode) {currencyCodeRepository.save(currencyCode);}
+    public List<CurrencyCode> searchCurrencyCodesByName(String name) {
+        return currencyCodeRepository.queryByName(name);
+    }
+    @Override
+    public void saveCurrencyCode (CurrencyCode currencyCode) {
+       if (searchCurrencyCodesByName(currencyCode.getName()).isEmpty()) {
+           currencyCodeRepository.save(currencyCode);
+       }
+
+    }
 }

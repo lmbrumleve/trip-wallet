@@ -30,12 +30,8 @@ public class User implements UserDetails {
     private Role role;
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
-
-    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_currency_code",
-    joinColumns = {@JoinColumn (name = "user_id")},
-    inverseJoinColumns = { @JoinColumn (name = "currency_code_id")})
-    private Set<CurrencyCode> currencyCodes = new HashSet<>();
+    @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Favorite> favorites = new HashSet<>();
 
     public void setId(Integer id) {
         this.id = id;
@@ -118,11 +114,20 @@ public class User implements UserDetails {
         this.tokens = tokens;
     }
 
-    public Set<CurrencyCode> getCurrencyCodes() {
-        return currencyCodes;
+//    public Set<CurrencyCode> getCurrencyCodes() {
+//        return currencyCodes;
+//    }
+//
+//    public void setCurrencyCodes(Set<CurrencyCode> currencyCodes) {
+//        this.currencyCodes = currencyCodes;
+//    }
+
+
+    public Set<Favorite> getFavorites() {
+        return favorites;
     }
 
-    public void setCurrencyCodes(Set<CurrencyCode> currencyCodes) {
-        this.currencyCodes = currencyCodes;
+    public void setFavorites(Set<Favorite> favorites) {
+        this.favorites = favorites;
     }
 }

@@ -12,4 +12,7 @@ public interface CurrencyCodeService {
     List<CurrencyCode> getAllCurrencyCodes();
 
     void saveCurrencyCode (CurrencyCode currencyCode);
+
+    List<CurrencyCode> searchCurrencyCodesByName(String name);
+
 }

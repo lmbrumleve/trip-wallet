@@ -12,41 +12,37 @@ public class CurrencyCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private String currencyCode;
+    private String name;
 
-    @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currencyCodes")
-    private Set<User> users = new HashSet<>();
+    @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currencyCode")
+    private Set<Favorite> favorites = new HashSet<>();
 
 
     public CurrencyCode() {
 
     }
-    public CurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
-    }
 
+    public CurrencyCode(String name) {
+        this.name = name;
+    }
 
     public int getID() {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public String getName() {
+        return name;
     }
 
-    public String getCurrencyCode() {
-        return currencyCode;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
+    public Set<Favorite> getFavorites() {
+        return favorites;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setFavorites(Set<Favorite> favorites) {
+        this.favorites = favorites;
     }
 }

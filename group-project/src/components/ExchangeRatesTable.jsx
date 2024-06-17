@@ -71,32 +71,32 @@ const fetchCurrencyCodes = async () => {
       } catch (error) {
         console.error("Failed to fetch: ", error);
       }
-    
+      
     }
   
     useEffect(() => {
       fetchCurrencyCodes();
     }, [])
-  
+   
     console.log(currencyCodes.length)
 
-const postCurrencyCodes = () => {
-
-if (currencyCodes.length === 0) { 
+const postCurrencyCodes = () => { 
+ 
+// if (currencyCodes.length === 0) { 
 for(let i=0; i<currencyArr.length; i++){
 
 fetch("http://localhost:8080/currencyCode/add", {
-
+ 
     method:"POST",
     headers:{
         "Content-Type":"application/json",
         Authorization: 'Bearer ' + localStorage.getItem('token')
       },
-        body:JSON.stringify({currencyCode: currencyArr[i]})
+        body:JSON.stringify({name: currencyArr[i]})
     })
   }
 }
-} 
+// } 
 
 useEffect(() => {
   postCurrencyCodes();
