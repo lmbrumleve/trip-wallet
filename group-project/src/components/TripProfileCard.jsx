@@ -15,6 +15,7 @@ export default function ProfileCard() {
 
   const userDefaultCurrency = "USD"
   const [trips, setTrips] = useState([]);
+  const [isShown, setIsShown] = useState(true);
 
   const navigate = useNavigate();
 
@@ -57,8 +58,15 @@ const handleUpdate = (e,id)=>{
     <Card style={{ width: '18rem' }} className='shadow'>
     {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
     <Card.Body>
-      <div className="position-top-right button-spacing">
-    <Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,trip.id)}><UpdateIcon/></Button>
+      <div 
+      className="position-top-right button-spacing"
+      // onMouseEnter={() => setIsShown(false)}
+      // onMouseLeave={() => setIsShown(true)}
+      >
+    <Button className="btn btn-secondary trip-button" size="sm"  onClick={(e)=>handleUpdate(e,trip.id)}><UpdateIcon/></Button>
+    {/* {!isShown && (
+      <div>Update Trip</div>
+    )} */}
     </div>
       <br/>
       <br/>
