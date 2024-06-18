@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
-import { TextField, Box } from '@mui/material';
+import { TextField, Box, Tooltip } from '@mui/material';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import UpdateIcon from '@mui/icons-material/Update';
@@ -63,7 +63,8 @@ const handleUpdate = (e,id)=>{
       // onMouseEnter={() => setIsShown(false)}
       // onMouseLeave={() => setIsShown(true)}
       >
-    <Button className="btn btn-secondary trip-button" size="sm"  onClick={(e)=>handleUpdate(e,trip.id)}><UpdateIcon/></Button>
+    <Tooltip title="Update Trip"><Button className="btn btn-secondary trip-button" size="sm"  onClick={(e)=>handleUpdate(e,trip.id)}><UpdateIcon/></Button>
+    </Tooltip>
     {/* {!isShown && (
       <div>Update Trip</div>
     )} */}

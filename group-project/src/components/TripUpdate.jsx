@@ -4,6 +4,7 @@ import {useForm} from 'react-hook-form'
 import NavBar from "./NavBar.jsx"
 import { Button, Card } from "react-bootstrap"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
+import { Tooltip } from '@mui/material'
 
 
     export default function tripUpdate(){
@@ -121,8 +122,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever.js"
 
 
             <br />
-            <Button className="btn btn-outline-primary trip-button" size="sm" onClick={(e)=>handleDelete(e,trip.id)}><DeleteForeverIcon/></Button>
-            <input type="submit" value="Update Trip!" className="btn btn-primary trip-button" onClick={updateTrip}/>
+            <Tooltip title="Delete Trip"><Button className="btn btn-outline-primary trip-button" size="sm" onClick={(e)=>handleDelete(e,trip.id)}><DeleteForeverIcon/></Button></Tooltip>
+            <input type="submit" value="Update Trip" className="btn btn-primary trip-button" onClick={updateTrip}/>
 
         </form>
         </Card>

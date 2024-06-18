@@ -15,6 +15,7 @@ import { pink, yellow } from "@mui/material/colors";
 import AddIcon from '@mui/icons-material/Add';
 import { enUS } from "date-fns/locale";
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Tooltip } from "@mui/material";
 
 
 export default function Transactions(props) {
@@ -141,8 +142,9 @@ console.log(totalSpent)
             <br/>
 
             <Card>
-            <Button to="/transactions/add" size="sm" className="position-top-right btn btn-outline-primary transaction-button"><AddIcon/></Button>
-
+            <Tooltip title="Add Transaction">
+                <Button size="sm" className="position-top-right btn btn-outline-primary transaction-button" onClick={(e) => navigate("/transactions/add")}><AddIcon/></Button>
+                </Tooltip>
             <h1>Transaction History</h1>
             {/* <hr/> */}
             <br/>
@@ -166,7 +168,7 @@ console.log(totalSpent)
                 {transactions.map((ans)=>(
                 <tr>
                                         <td>
-                    <FormControlLabel
+                    <Tooltip title="Mark as important"><FormControlLabel
                             control = {
                                 <Checkbox value={checked[ans.id]}
                                     icon = {<StarBorder color="disabled" />}
@@ -178,17 +180,17 @@ console.log(totalSpent)
 
                         />
                               }
-                        />
+                        /></Tooltip>
                     </td>
                     <td>{format(ans.date, "P")}</td>
                     <td className="text-start"><p className="fw-bold text-nowrap">Payment to {ans.name} </p>
                 {ans.description}</td>
-                    <td><Link to={`/trips/ID/${ans.trip.id}`}>{ans.trip.destination} ({ans.trip.name})</Link></td>
+                    <td><Tooltip title="Navigate to Trip Profile"><Link to={`/trips/ID/${ans.trip.id}`}>{ans.trip.destination} ({ans.trip.name})</Link></Tooltip></td>
                     <td>{ans.budgetCategory}</td>
                     <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
                     <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
-                    <td><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></Button>
-                    <Button className="btn btn-outline-secondary trip-button" size="sm" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></Button></td>
+                    <td><Tooltip title="Update Transaction"><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></Button></Tooltip>
+                    <Tooltip title="Delete Transaction"><Button className="btn btn-outline-secondary trip-button" size="sm" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></Button></Tooltip></td>
 
                 </tr>
                 ))}

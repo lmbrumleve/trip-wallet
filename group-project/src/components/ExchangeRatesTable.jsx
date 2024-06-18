@@ -12,6 +12,7 @@ import { Token } from '@mui/icons-material';
 import { id } from 'date-fns/locale';
 import { pink } from '@mui/material/colors';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import { Tooltip } from '@mui/material';
 
 export default function ExchangeRatesTable () {
 
@@ -346,7 +347,7 @@ console.log(favoriteByUsername)
                     <tr>
                     <td>
                                          
-                  <FormControlLabel
+                  <Tooltip title="Mark as favorite"><FormControlLabel
                           control = {
                               <Checkbox key={checked[data.id]}
                                   icon = {<FavoriteBorderIcon color="disabled"/>}
@@ -357,7 +358,7 @@ console.log(favoriteByUsername)
                       />
                       }
                       // label = {data.target}
-                      />
+                      /></Tooltip>
                       <Link to={`/timeSeriesGraph/${userDefaultCurrency}/${data.currencyCode}`}>{data.base}/{data.currencyCode}</Link></td>
                     <td>{data.rate}</td>
                     <td>{data.rateIncrease}</td>
