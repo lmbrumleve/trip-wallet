@@ -24,8 +24,9 @@ export default function ExchangeRatesTable () {
   const[checkedState, setCheckedState] = useState([]); 
   const[isLoading, setIsLoading] = useState(false);
   const[currencies, setCurrencies] = useState([]);
+  const[favoriteByUsernameId, setFavoriteByUsernameId] = useState({});
   const[currencyCodes, setCurrencyCodes] = useState({});
-  const[user, setUser] = useState();
+  const[user, setUser] = useState({});
 
 
 //Use jwtDecode to get username from token in local storage
@@ -39,21 +40,49 @@ export default function ExchangeRatesTable () {
       }, [])
       console.log(username)
 
-//Get userID by username
+      console.log(user)
+
+//Get user by username
 const fetchUserByUsername = async () => {
-  fetch(`http://localhost:8080/favorites/getUser`, {
-    headers:{"Content-Type":"application/json",
-    Authorization: 'Bearer ' + localStorage.getItem('token')},
-    }).then(res=>res.json()).then((result)=>{setUser(result);})
+  try{
+  const response = await fetch("http://localhost:8080/favorites/getUser", {
+          headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+      }).then(res=>res.json()).then((result)=>{setUser(result);}) 
+              
+      } catch (error) {
+        console.error("Failed to fetch: ", error);
+      }
     
     }
   
     useEffect(() => {
       fetchUserByUsername();
     }, [])
-
+  
     console.log(user)
 
+//Fetch Currency Codes
+
+const fetchCurrencies = async () => {
+  try{
+      const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrencies(result);})
+    }
+   catch(error){
+       console.log(error);
+   }
+
+    };
+
+useEffect(() => {
+      fetchCurrencies();
+}, []); 
+
+
+const currencyArr = Object.keys(currencies);
+console.log(currencyArr)
 
 const fetchCurrencyCodes = async () => {
   try{
@@ -66,44 +95,38 @@ const fetchCurrencyCodes = async () => {
               
       } catch (error) {
         console.error("Failed to fetch: ", error);
-      } 
+      }
       
     }
   
-    useEffect(() => { 
-      fetchCurrencyCodes(); 
-    }, []) 
+    useEffect(() => {
+      fetchCurrencyCodes();
+    }, [])
    
-    console.log(currencyCodes[1]) 
+    console.log(currencyCodes.length)
 
-//Create Array of Favorite Objects and post to MySQL
-    const postFavorites = () => {
-      let favObj = {};
-      let favObjArr = [];
-      for(let i=0; i<currencyCodes.length; i++){       
-        favObj = {
-          favorite: false,
-          user: user
-        }
-        favObjArr.push(favObj); 
-        console.log(favObjArr[i]);
-        fetch("http://localhost:8080/favorites/add", {
+const postCurrencyCodes = () => { 
+ 
+// if (currencyCodes.length === 0) { 
+for(let i=0; i<currencyArr.length; i++){
 
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization: 'Bearer ' + localStorage.getItem('token')
-          },
-            body:JSON.stringify(favObjArr[i])
-        })
-       
-    }
-      
-    } 
-     
+fetch("http://localhost:8080/currencyCode/add", {
+ 
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json",
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      },
+        body:JSON.stringify({name: currencyArr[i]})
+    })
+  }
+}
+// } 
+
 useEffect(() => {
-  postFavorites();
-}, [currencyCodes])
+  postCurrencyCodes();
+}, [])
+
 
 //Get current data from favorite rates table in database (first time will be empty)
 const fetchFavoriteByUsername = async () => {
@@ -131,8 +154,6 @@ const response = await fetch("http://localhost:8080/favorite/entries", {
 
 let favoriteRate;
 let favoriteRateArr = [];
-const currencyArr = Object.keys(currencies);
-console.log(currencyArr)
 
 for (let i=0; i<currencyArr.length; i++){
     favoriteRate = {

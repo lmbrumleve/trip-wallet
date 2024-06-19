@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from './components/NavBar';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
+
 export default function Login() {
     const navigate = useNavigate();
+    const[currencies, setCurrencies] = useState([]);
+
 
 
     const [formData, setFormData] = useState({
@@ -34,6 +37,49 @@ export default function Login() {
             alert("Invalid Login")
         }
     };
+
+    //Fetch Currency Codes
+
+const fetchCurrencies = async () => {
+    try{
+        const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrencies(result);})
+      }
+     catch(error){
+         console.log(error);
+     }
+  
+      };
+   
+  useEffect(() => {
+        fetchCurrencies();
+  }, []); 
+  
+  
+  const currencyArr = Object.keys(currencies);
+  console.log(currencyArr)
+   
+  //Post codes from Frankfurter API to MySQL
+  const postCurrencyCodes = () => { 
+    
+  // if (currencyCodes.length === 0) { 
+  for(let i=0; i<currencyArr.length; i++){
+  
+  fetch("http://localhost:8080/currencyCode/add", {
+   
+      method:"POST",
+      headers:{
+          "Content-Type":"application/json",
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        },
+          body:JSON.stringify({name: currencyArr[i]})
+      })
+    }
+  }
+  // } 
+  
+  useEffect(() => {
+    postCurrencyCodes();
+  }, [])
 
     return (
         <>
