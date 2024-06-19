@@ -49,7 +49,7 @@ export default function TransactionAdd() {
         console.log(currency)
         fetchTransactionExchangeRate();
         // const date = format(new Date(), 'P');
-        const date = new Date();
+        const date = new Date(); 
 
 
         fetch(`http://localhost:8080/trips/searchByID?ID=${tripID}`, {
@@ -67,14 +67,14 @@ export default function TransactionAdd() {
                 Authorization: 'Bearer ' + localStorage.getItem('token')},
                 body:JSON.stringify(transaction)
                     }
-            ).then(
+            ).then( 
                 ()=>{console.log("New record sent")}
             )
             .then(
                 ()=>{navigate("/trips/ID/" + tripID)}
             )
         })
-
+ 
     }
 
     useEffect(()=>{

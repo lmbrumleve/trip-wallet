@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
     @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Favorite> favorites = new HashSet<>();
+    private List<Favorite> favorites = new ArrayList<>();
 
     public void setId(Integer id) {
         this.id = id;
@@ -123,11 +123,11 @@ public class User implements UserDetails {
 //    }
 
 
-    public Set<Favorite> getFavorites() {
+    public List<Favorite> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(Set<Favorite> favorites) {
+    public void setFavorites(List<Favorite> favorites) {
         this.favorites = favorites;
     }
 }

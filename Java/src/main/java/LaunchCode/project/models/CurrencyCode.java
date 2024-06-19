@@ -2,7 +2,9 @@ package LaunchCode.project.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +17,7 @@ public class CurrencyCode {
     private String name;
 
     @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currencyCode")
-    private Set<Favorite> favorites = new HashSet<>();
+    private List<Favorite> favorites = new ArrayList<>();
 
 
     public CurrencyCode() {
@@ -38,11 +40,11 @@ public class CurrencyCode {
         this.name = name;
     }
 
-    public Set<Favorite> getFavorites() {
+    public List<Favorite> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(Set<Favorite> favorites) {
+    public void setFavorites(List<Favorite> favorites) {
         this.favorites = favorites;
     }
 }

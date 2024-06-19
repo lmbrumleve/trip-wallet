@@ -56,8 +56,10 @@ public class Favorite {
         this.favorite = favorite;
     }
 
+    public User getUser() {
+        return user;
+    }
 
-
-    //TODO: Which fields do I join to associate an ID from this table with an ID from the user table?
+//TODO: Which fields do I join to associate an ID from this table with an ID from the user table?
     //There will be many rates to one user, and many users to one rate. So @ManytoMany
 }

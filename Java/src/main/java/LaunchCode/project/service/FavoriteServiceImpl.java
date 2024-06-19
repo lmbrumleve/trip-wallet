@@ -37,14 +37,14 @@ public class FavoriteServiceImpl implements FavoriteService {
 //    }
 
     @Override
-    public User getUserIdByUsername(String username) {
+    public Integer getUserIdByUsername(String username) {
         User user = null;
         if (userRepository.findByUsername(username).isPresent()) {
             user = (userRepository.findByUsername(username)).get();
         }
         System.out.println(user);
         if (user != null) {
-            return user;
+            return user.getId();
         } else {
             return null;
         }

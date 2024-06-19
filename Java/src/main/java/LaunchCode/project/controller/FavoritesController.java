@@ -25,15 +25,16 @@ public class FavoritesController {
     @Autowired
     private FavoriteService favoriteService;
 
-    @GetMapping("/getUser")
-    public User getUserByUsername(Authentication authentication) {
+    @GetMapping("/getUserId")
+    public Integer getUserIdByUsername(Authentication authentication) {
         String username = authentication.getName();
             return favoriteService.getUserIdByUsername(username);
     }
 
     @PostMapping("/add")
-    public String addFavorites(@RequestBody Favorite favorite) {
-        favoriteService.saveFavorite(favorite);
+    public String addFavorites(@RequestBody Favorite favoriteObj) {
+        favoriteService.saveFavorite(favoriteObj);
+
         return "New favorite saved";
     }
 }

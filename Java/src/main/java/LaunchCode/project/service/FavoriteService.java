@@ -1,7 +1,6 @@
 package LaunchCode.project.service;
 
 import LaunchCode.project.models.Favorite;
-import LaunchCode.project.models.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,5 +13,5 @@ public interface FavoriteService {
 //
 //    List<Favorite> getAllFavorites();
 
-    User getUserIdByUsername(String username);
+    Integer getUserIdByUsername(String username);
 }
