@@ -16,6 +16,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { enUS } from "date-fns/locale";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Tooltip } from "@mui/material";
+import UpdateButton from "./components/UpdateButton.jsx";
 
 
 export default function Transactions(props) {
@@ -189,7 +190,9 @@ console.log(totalSpent)
                     <td>{ans.budgetCategory}</td>
                     <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
                     <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
-                    <td><Tooltip title="Update Transaction"><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></Button></Tooltip>
+                    <td>
+                        {/* <UpdateButton type="Transaction" /> */}
+                <Tooltip title="Update Transaction"><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></Button></Tooltip>
                     <Tooltip title="Delete Transaction"><Button className="btn btn-outline-secondary trip-button" size="sm" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></Button></Tooltip></td>
 
                 </tr>
