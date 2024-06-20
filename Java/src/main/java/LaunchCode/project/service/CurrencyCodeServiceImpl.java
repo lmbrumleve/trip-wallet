@@ -26,6 +26,5 @@ public class CurrencyCodeServiceImpl implements CurrencyCodeService{
        if (searchCurrencyCodesByName(currencyCode.getName()).isEmpty()) {
            currencyCodeRepository.save(currencyCode);
        }
-
     }
 }

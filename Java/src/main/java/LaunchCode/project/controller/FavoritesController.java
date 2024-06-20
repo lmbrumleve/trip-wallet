@@ -1,11 +1,9 @@
 package LaunchCode.project.controller;
 
 
-import LaunchCode.project.models.AuthenticationResponse;
-import LaunchCode.project.models.Favorite;
-import LaunchCode.project.models.FavoriteRate;
-import LaunchCode.project.models.User;
+import LaunchCode.project.models.*;
 import LaunchCode.project.repository.UserRepository;
+import LaunchCode.project.service.CurrencyCodeService;
 import LaunchCode.project.service.FavoriteService;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,9 @@ public class FavoritesController {
     @Autowired
     private FavoriteService favoriteService;
 
+    @Autowired
+    private CurrencyCodeService currencyCodeService;
+
     @GetMapping("/getUserId")
     public Integer getUserIdByUsername(Authentication authentication) {
         String username = authentication.getName();
@@ -37,4 +38,6 @@ public class FavoritesController {
 
         return "New favorite saved";
     }
+
+
 }

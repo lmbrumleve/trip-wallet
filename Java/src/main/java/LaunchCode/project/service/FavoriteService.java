@@ -9,6 +9,7 @@ public interface FavoriteService {
 //    void updateFavorites(Favorite favorite, int id);
 //
     void saveFavorite(Favorite favorite);
+
 //    Favorite getFavoriteById(int ID);
 //
 //    List<Favorite> getAllFavorites();

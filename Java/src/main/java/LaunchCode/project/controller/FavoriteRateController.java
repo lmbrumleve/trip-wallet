@@ -1,8 +1,10 @@
 package LaunchCode.project.controller;
 
+import LaunchCode.project.models.CurrencyCode;
 import LaunchCode.project.models.FavoriteRate;
 import LaunchCode.project.models.Transaction;
 import LaunchCode.project.models.Trip;
+import LaunchCode.project.service.CurrencyCodeService;
 import LaunchCode.project.service.FavoriteRateService;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -22,6 +24,7 @@ public class FavoriteRateController {
 
     @Autowired
     private FavoriteRateService favoriteRateService;
+
     @GetMapping("/entries")
     public ResponseEntity<List<FavoriteRate>> getCurrentUsername(Authentication authentication) {
         String username = authentication.getName();
@@ -40,6 +43,7 @@ public class FavoriteRateController {
         favoriteRateService.saveFavoriteRate(favoriteRate);
         return "New favorite saved";
     }
+
 
     @PutMapping("/{id}")
     public String updateFavoriteRate (@RequestBody FavoriteRate favoriteRate, @PathVariable int id){

@@ -25,6 +25,8 @@ public class FavoriteServiceImpl implements FavoriteService {
         favoritesRepository.save(favorite);
 
     }
+
+
 //
 //    @Override
 //    public Favorite getFavoriteById(int ID) {

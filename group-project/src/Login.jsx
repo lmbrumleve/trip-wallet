@@ -7,8 +7,11 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 export default function Login() {
     const navigate = useNavigate();
     const[currencies, setCurrencies] = useState([]);
-
-
+    const[currencyCodes, setCurrencyCodes] = useState({});
+    const[userId, setUserId] = useState();
+    const[currencyIdUserId, setCurrencyIdUserId] = useState({});
+    const[loaded, setLoaded] = useState(false);
+    const[data, setData] = useState([]);
 
     const [formData, setFormData] = useState({
         username: '',
@@ -38,7 +41,21 @@ export default function Login() {
         }
     };
 
-    //Fetch Currency Codes
+ //Get userID by username
+const fetchUserIdByUsername = async () => {
+    fetch(`http://localhost:8080/favorites/getUserId`, {
+      headers:{"Content-Type":"application/json",
+      Authorization: 'Bearer ' + localStorage.getItem('token')},
+      }).then(res=>res.json()).then((result)=>{setUserId(result);})
+      
+      }
+    
+      useEffect(() => {
+        fetchUserIdByUsername();
+      }, [])
+
+      console.log(userId)
+    //Fetch Currency Codes 
 
 const fetchCurrencies = async () => {
     try{
@@ -58,29 +75,120 @@ const fetchCurrencies = async () => {
   const currencyArr = Object.keys(currencies);
   console.log(currencyArr)
    
-  //Post codes from Frankfurter API to MySQL
-  const postCurrencyCodes = () => { 
+//   //Post codes from Frankfurter API to MySQL
+//   const postCurrencyCodes = () => { 
     
-  // if (currencyCodes.length === 0) { 
-  for(let i=0; i<currencyArr.length; i++){
+//   // if (currencyCodes.length === 0) { 
+//   for(let i=0; i<currencyArr.length; i++){
   
-  fetch("http://localhost:8080/currencyCode/add", {
+//     fetch("http://localhost:8080/currencyCode/add", {
    
+//       method:"POST",
+//       headers:{
+//           "Content-Type":"application/json",
+//           Authorization: 'Bearer ' + localStorage.getItem('token')
+//         },
+//           body:JSON.stringify({name: currencyArr[i]})
+//       })
+//     }
+//   }
+//   useEffect(() => {
+//     postCurrencyCodes(); 
+//   }, [currencies])
+
+//   const getCurrencyCodes = () => {
+ 
+//     fetch("http://localhost:8080/currencyCode/getAll", {
+ 
+//     method:"GET",
+//     headers:{
+//         "Content-Type":"application/json",
+//         Authorization: 'Bearer ' + localStorage.getItem('token')
+//       },
+//              }).then(res=>res.json()).then((result)=>{setCurrencyCodes(result);})
+//   }
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//         setData(await getCurrencyCodes());
+//         setLoaded(true);
+//     }
+//     fetchData();
+//   }, []); 
+
+//   console.log(currencyCodes)
+ 
+  const postFavorites = () => {
+    let favObj = {}; 
+    let favObjArr = [];
+
+    for(let i=0; i<currencyArr.length; i++){     
+      favObj = {  
+        favorite: false,   
+        currencyCode:  
+        {name: currencyArr[i]},   
+        user:     
+        {id: userId}  
+      }  
+      favObjArr.push(favObj); 
+      console.log(favObj);   
+
+      fetch("http://localhost:8080/favorites/add", {
+
       method:"POST",
-      headers:{
-          "Content-Type":"application/json",
+      headers:{ 
+          "Content-Type":"application/json",   
           Authorization: 'Bearer ' + localStorage.getItem('token')
         },
-          body:JSON.stringify({name: currencyArr[i]})
-      })
-    }
+          body:JSON.stringify(favObj)
+      }) 
+     
   }
+
+  } 
+   
+useEffect(() => {
+    postFavorites();
+}, [currencyArr, userId])
+
+
+
+// console.log(currencyCodes)
+//     useEffect(() => {
+
+//         let favorite = {
+//             favorite: false,
+//             currencyCodeId: 0,
+//             userId: userId
+//         }
+//         for(let i=0; i<currencyArr.length; i++) {
+//             // favorite.currencyCodeId = currencyCodes[i].id
+//             // currencyIdUserId.push(favorite)
+//         }
+//         console.log(currencyIdUserId)
+
+//       }, [userId, currencyCodes, currencyArr])
+
+
+// const postCodeIdUserId = () => {
+//     for(let i=0; i<currencyArr.length; i++){
+// console.log(currencyArr[i])
+// console.log(userId)
+//       fetch("http://localhost:8080/favorites/add", {
+   
+//       method:"POST",
+//       headers:{
+//           "Content-Type":"application/json",
+//           Authorization: 'Bearer ' + localStorage.getItem('token')
+//         },
+//           body:JSON.stringify(currencyIdUserId)
+//       })
+//   } 
+// }
   
-  // } 
-  
-  useEffect(() => {
-    postCurrencyCodes();
-  }, [currencies])
+//   useEffect(() => {
+//     postCodeIdUserId();
+//   }, [currencyCodes, currencyArr, userId])
 
     return (
         <>
