@@ -9,8 +9,8 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
-    @ManyToOne
-    @JoinColumn(name="currency_codes_id")
+    @ManyToOne  (fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="currency_code_id")
     private CurrencyCode currencyCode;
 
     @ManyToOne

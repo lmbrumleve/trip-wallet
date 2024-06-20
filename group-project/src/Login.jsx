@@ -75,11 +75,12 @@ const fetchCurrencies = async () => {
       })
     }
   }
+  
   // } 
   
   useEffect(() => {
     postCurrencyCodes();
-  }, [])
+  }, [currencies])
 
     return (
         <>

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CurrencyCodeRepository extends JpaRepository <CurrencyCode, Integer> {
 
-    @Query(value="select * from currency_codes t where t.name=?", nativeQuery = true)
+    @Query(value="select * from currency_code t where t.name=?", nativeQuery = true)
     List<CurrencyCode> queryByName(String name);
 
 }

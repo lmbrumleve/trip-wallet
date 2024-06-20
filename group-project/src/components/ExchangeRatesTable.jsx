@@ -88,17 +88,17 @@ const fetchCurrencyCodes = async () => {
         console.log(typeof(currencyCodeId))    
         favObj = { 
           favorite: false, 
-          // currencyCode: 
-          // {id: currencyCodeId},  
-          user:  
-          {id: userId}
+          currencyCode: 
+          {id: currencyCodeId},  
+          user:    
+          {id: userId} 
         } 
         favObjArr.push(favObj); 
         console.log(favObj); 
         fetch("http://localhost:8080/favorites/add", {
 
         method:"POST",
-        headers:{
+        headers:{ 
             "Content-Type":"application/json",  
             Authorization: 'Bearer ' + localStorage.getItem('token')
           },
@@ -106,12 +106,13 @@ const fetchCurrencyCodes = async () => {
         })
        
     }
-      
+
     } 
      
 useEffect(() => {
+  console.log("hello")
   postFavorites();
-}, [])
+}, [currencyCodes, userId])
 
 //Get current data from favorite rates table in database (first time will be empty)
 const fetchFavoriteByUsername = async () => {
@@ -341,7 +342,7 @@ if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
     allRates.push(targetRateObj);
     JSON.stringify(allRates);
     // console.log(allRates);
-
+ 
 }
 console.log(allRates)
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table (name = "currency_codes")
+@Table (name = "currency_code")
 public class CurrencyCode {
 
     @Id
