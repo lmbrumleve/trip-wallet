@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,16 @@ public class User implements UserDetails {
     private Role role;
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    private HashMap<String , Boolean> favorites;
+
+    public HashMap<String, Boolean> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(HashMap<String, Boolean> favorites) {
+        this.favorites = favorites;
+    }
 
     public void setId(Integer id) {
         this.id = id;

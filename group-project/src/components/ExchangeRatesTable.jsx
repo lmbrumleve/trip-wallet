@@ -26,6 +26,8 @@ export default function ExchangeRatesTable () {
   const[isLoading, setIsLoading] = useState(false);
   const[currencies, setCurrencies] = useState([]);
   const[favoriteByUsernameId, setFavoriteByUsernameId] = useState({});
+  const[userId, setUserId] = useState();
+  const[favoriteRateArr, setFavoriteRateArr] = useState(currencies)
 
 
 //Use jwtDecode to get username from token in local storage
@@ -38,6 +40,22 @@ export default function ExchangeRatesTable () {
         }
       }, [])
       console.log(username)
+
+//Get userID by username
+const fetchUserIdByUsername = async () => {
+  fetch(`http://localhost:8080/favorites/getUserId`, {
+    headers:{"Content-Type":"application/json",
+    Authorization: 'Bearer ' + localStorage.getItem('token')},
+    }).then(res=>res.json()).then((result)=>{setUserId(result);})
+    
+    }
+  
+    useEffect(() => {
+      fetchUserIdByUsername();
+    }, [])
+
+    console.log(userId)
+
 
 //Fetch Currency Codes
 
@@ -76,43 +94,33 @@ const response = await fetch("http://localhost:8080/favorite/entries", {
     }
   
   }
-
+ 
   useEffect(() => {
     fetchFavoriteByUsername();
   }, [])
 
   console.log(favoriteByUsername)
 
-//Create favorite rates object for favorite rates table in the database
 
-let favoriteRate;
-let favoriteRateArr = [];
-
+//Create favorite rates array for favorite rates table in the database
+ 
 for (let i=0; i<currencyArr.length; i++){
-    favoriteRate = {
-        username: username,
-        currencyCode: currencyArr[i], 
-        favorite: false
-      };
-      favoriteRateArr.push(favoriteRate);
+  favoriteRateArr[currencyArr[i]] = false;
     }
 console.log(favoriteRateArr)
- 
-//Put favorite rates object in the favorite rates table in database initial time (if needed)
-console.log(favoriteByUsername.length)
 
-// console.log(favoriteRateArr)
+
+//Update User's favorites in the user table in the database
+
 const postFavoriteRateArr = () => {
-for(let i=0; i<currencyArr.length; i++){
-  console.log(favoriteRateArr[i])
+  console.log(favoriteRateArr)
 
-//if there is no data in the table, add the favoriteRateArr data to the favorite rates table in database
-//would be best to base this on the user id not on the username
-if(favoriteByUsername.length === 0){ 
+for(let i=0; i<favoriteRateArr.length; i++){
+  console.log(favoriteRateArr)
 
-    fetch("http://localhost:8080/favorite/add", {
+    fetch("http://localhost:8080/favorites/update/" + userId, {
 
-    method:"POST",
+    method:"PUT",
     headers:{
         "Content-Type":"application/json",
         Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -123,20 +131,17 @@ if(favoriteByUsername.length === 0){
 }
 
 } 
-}
-useEffect (() => { 
-postFavoriteRateArr();
-fetchFavoriteByUsername();
-}, []);
-console.log(favoriteByUsername);
-//       console.log(favoriteRateArr)
 
+useEffect (() => {  
+  postFavoriteRateArr();
+}, []);
+
+  //FETCH DATE:
 
     const today = new Date();
     var yesterday = new Date();
     yesterday.setDate(today.getDate() - 7);
 
-  //FETCH DATE:
   const fetchDate = async () => {
   await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
         setDate(res.data.date);
