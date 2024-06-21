@@ -100,10 +100,9 @@ const chart = () => {
     //   console.log(rates)
       setRateArr(rates);
 
-
     }
-    //   console.log(dateArr);
-    //   console.log(rateArr);
+      console.log(dateArr);
+      console.log(rateArr);
 
 
     setChartData({
@@ -154,7 +153,7 @@ const options = {
 
 useEffect(() => {
     chart()
-})
+}, [chartData, options, dateArr, rateArr, timeSeriesRates])
 
 return(
     <>
