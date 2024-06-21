@@ -335,15 +335,21 @@ console.log(favoriteByUsername)
         <Table striped bordered hover>
       <thead>
         <tr>
-          <th>Currency</th>
+          {/* <th>Currency</th>
           <th>Rate</th>
-          <th>Change</th>
-        </tr> 
+          <th>Change</th> */}
+          <td>Currency</td>
+          <td>1.00 USD</td>
+          <td>Change</td>
+        </tr>
       </thead>
       {console.log(allRates)}
         {allRates?.map((data) =>{
             return (
                 <tbody>
+                 
+
+                  
                     <tr>
                     <td>
                                          
@@ -359,7 +365,7 @@ console.log(favoriteByUsername)
                       }
                       // label = {data.target}
                       /></Tooltip>
-                      <Link to={`/timeSeriesGraph/${data.currencyCode}/${userDefaultCurrency}`}>{data.base}/{data.currencyCode}</Link></td>
+                      <Link to={`/timeSeriesGraph/${userDefaultCurrency}/${data.currencyCode}`}>{data.currencyCode}</Link></td>
                     <td>{data.rate}</td>
                     <td>{data.rateIncrease}</td>
                     </tr>
