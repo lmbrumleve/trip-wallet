@@ -82,7 +82,7 @@ export default function TransactionAdd() {
          headers:{"Content-Type":"application/json",
          Authorization: 'Bearer ' + localStorage.getItem('token')},
          }).then(res=>res.json()).then((result)=>{setTransactions(result);})
-        fetch("http://localhost:8080/trips/getAll", {
+        fetch("http://localhost:8080/trips/getByUsername", {
           headers:{"Content-Type":"application/json",
           Authorization: 'Bearer ' + localStorage.getItem('token')},
           }).then(res=>res.json()).then((result)=>{setTrips(result);})

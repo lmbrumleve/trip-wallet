@@ -1,6 +1,7 @@
 package LaunchCode.project.service;
 
 import LaunchCode.project.models.Transaction;
+import LaunchCode.project.models.Trip;
 import LaunchCode.project.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,10 @@ public class TransactionServiceImpl implements TransactionService{
         return transactionRepository.findAll();
     }
 
+    @Override
+    public List<Transaction> findByUsername(String username) {
+        return transactionRepository.queryByUsername(username);
+    }
     @Override
     public List<Transaction> searchTransactionsByName(String name) {
         return transactionRepository.queryByName(name);
