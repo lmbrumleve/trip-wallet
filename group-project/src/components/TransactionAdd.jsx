@@ -4,8 +4,9 @@ import NavBar from "./NavBar.jsx"
 import { jwtDecode } from "jwt-decode"
 import { format } from "date-fns"
 import { Card } from "react-bootstrap"
+import CurrencyCodeDropDown from './CurrencyCodeDropDown.jsx'
 
-export default function TransactionAdd() {
+export default function TransactionAdd(props) {
 
     const[name,setName]=useState('');
     const[description,setDescription]=useState('');
@@ -143,11 +144,13 @@ const currencyArr = Object.keys(currencies);
             <label for="currency" className="trip-button"></label>
             <select id="currency" name="currency" onChange = {(e)=>setCurrency(e.target.value)}>
             <option value="">-</option>
-            {currencyArr.map((ans) => {
+            <CurrencyCodeDropDown/>
+
+            {/* {currencyArr.map((ans) => {
                     return (
                     <option value={ans}>{ans}</option>
                     )
-                    })}
+                    })} */}
             </select><br />
             
             <label htmlFor="budgetCategory" className="trip-button">Budget Category:</label>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from "./NavBar"
 import { Card, Table } from 'react-bootstrap'
+import { jwtDecode } from 'jwt-decode'
 
 
 export default function TripSearch(){
@@ -8,6 +9,19 @@ export default function TripSearch(){
     const [sel, setSel] = useState("name")
     const [q, setQ] = useState("")
     const [ans, setAns] = useState([])
+    const [username, setUsername] = useState()
+    const [ansByUsername, setAnsByUsername] = useState([])
+
+        //Use jwtDecode to get username from token in local storage
+  
+        useEffect(() => {
+            if (localStorage.getItem('token') != undefined) {
+            const tokenObj = jwtDecode(localStorage.getItem('token'));
+            setUsername(tokenObj.sub)
+            console.log(username)
+            }
+          }, [])
+          console.log(username)
 
     function searchTrip() {
         if (sel=="name") {
@@ -34,6 +48,22 @@ export default function TripSearch(){
                 }).then(res=>res.json()).then((result)=>{setAns(result);})
         }
     }
+
+    useEffect(()=>{
+        for (let i=0; i < ans.length; i++) {
+            console.log(ans[i].username)
+            if (ans[i].username === username && ansByUsername.includes(ans[i]) === false) {
+                ansByUsername.push(ans[i])
+                console.log(ansByUsername)
+                setAns(ansByUsername);
+
+            } else {
+                setAns(ansByUsername)
+            }
+        }
+    }, [ans])
+        console.log(ansByUsername)
+        console.log(ans)
 
     return (
     <div>
