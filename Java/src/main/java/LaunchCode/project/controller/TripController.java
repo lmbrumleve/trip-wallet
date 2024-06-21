@@ -1,8 +1,11 @@
 package LaunchCode.project.controller;
 
+import LaunchCode.project.models.FavoriteRate;
 import LaunchCode.project.service.TripService;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +43,14 @@ public class TripController {
     @GetMapping("/trips/getAll")
     public List<Trip> getAllTrips() {
         return tripService.getAllTrips();
+    }
+
+    @GetMapping("trips/getByUsername")
+    public ResponseEntity<List<Trip>> getCurrentUsername(Authentication authentication) {
+        String username = authentication.getName();
+        System.out.println(username);
+        List<Trip> trips = tripService.findByUsername(username);
+        return ResponseEntity.ok(trips);
     }
 
     @GetMapping("/trips/searchByName")

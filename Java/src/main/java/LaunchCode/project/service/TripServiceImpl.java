@@ -1,5 +1,6 @@
 package LaunchCode.project.service;
 
+import LaunchCode.project.models.FavoriteRate;
 import LaunchCode.project.models.Trip;
 import LaunchCode.project.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,10 @@ public class TripServiceImpl implements TripService {
         return tripRepository.findAll();
     };
 
+    @Override
+    public List<Trip> findByUsername(String username) {
+        return tripRepository.queryByUsername(username);
+    }
     @Override
     public List<Trip> getTripsByName(String name) {
         return tripRepository.getTripsByName(name);
