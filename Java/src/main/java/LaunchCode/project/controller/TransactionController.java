@@ -70,6 +70,11 @@ public class TransactionController {
         return transactionService.searchTransactionsByAmount(amount);
     }
 
+    @GetMapping("/searchByBudgetCategory")
+    public List<Transaction> searchTransactionsByBudgetCategory(@RequestParam String budgetCategory) {
+        return transactionService.searchTransactionsByBudgetCategory(budgetCategory);
+    }
+
     @GetMapping("/searchByTripID")
     public List<Transaction> searchTransactionsByTripID(@RequestParam("ID") int ID) {
         return transactionService.searchTransactionsByTripID(ID);

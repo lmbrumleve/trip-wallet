@@ -18,7 +18,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 
     @Query(value="select * from Transaction t where t.amount = ?1", nativeQuery = true)
     List<Transaction> queryByAmount(double amount);
-
+    @Query(value="select * from Transaction t where t.budget_category = ?1", nativeQuery = true)
+    List<Transaction> queryByBudgetCategory(String budgetCategory);
 //    @Query(value="delete * from Transaction t where t.id = ?1", nativeQuery = true)
 //    void deletebyid(int id);
     @Query(value="select * from Transaction t where t.trip_id = ?1", nativeQuery = true)

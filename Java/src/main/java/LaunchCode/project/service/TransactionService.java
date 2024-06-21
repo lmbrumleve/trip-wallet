@@ -22,5 +22,7 @@ public interface TransactionService {
 
     List<Transaction> searchTransactionsByAmount(double amount);
 
+    List<Transaction> searchTransactionsByBudgetCategory(String name);
+
     List<Transaction> searchTransactionsByTripID(int id);
 }
