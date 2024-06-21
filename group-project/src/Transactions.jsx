@@ -38,7 +38,7 @@ export default function Transactions(props) {
 //            fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
             console.log("first useeffect");
             console.log(localStorage.getItem('token'));
-            fetch("http://localhost:8080/transactions/getAll", {
+            fetch("http://localhost:8080/transactions/getByUsername", {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -106,7 +106,7 @@ const handleFavorite = async (e,id,position) => {
         console.log(error);
     })
 
-    fetch("http://localhost:8080/transactions/getAll", {
+    fetch("http://localhost:8080/transactions/getByUsername", {
         headers:{"Content-Type":"application/json",
                 Authorization: 'Bearer ' + localStorage.getItem('token')},
         }).then(res=>res.json()).then((result)=>{setTransactions(result);})

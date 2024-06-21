@@ -1,10 +1,12 @@
 package LaunchCode.project.controller;
 
 import LaunchCode.project.models.Transaction;
+import LaunchCode.project.models.Trip;
 import LaunchCode.project.service.TransactionService;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,6 +53,13 @@ public class TransactionController {
         return transactionService.getAllTransactions();
     }
 
+    @GetMapping("/getByUsername")
+    public ResponseEntity<List<Transaction>> getCurrentUsername(Authentication authentication) {
+        String username = authentication.getName();
+        System.out.println(username);
+        List<Transaction> transactions = transactionService.findByUsername(username);
+        return ResponseEntity.ok(transactions);
+    }
     @GetMapping("/searchByName")
     public List<Transaction> searchTransactionsByName(@RequestParam String name) {
         return transactionService.searchTransactionsByName(name);

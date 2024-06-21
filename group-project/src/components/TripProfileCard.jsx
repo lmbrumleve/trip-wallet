@@ -9,7 +9,6 @@ import UpdateIcon from '@mui/icons-material/Update';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { enUS } from 'date-fns/locale';
-import { jwtDecode } from 'jwt-decode';
 
 
 export default function ProfileCard() {
@@ -21,16 +20,6 @@ export default function ProfileCard() {
 
   const navigate = useNavigate();
 
-  //Use jwtDecode to get username from token in local storage
-  
-  useEffect(() => {
-    if (localStorage.getItem('token') != undefined) {
-    const tokenObj = jwtDecode(localStorage.getItem('token'));
-    setUsername(tokenObj.sub)
-    console.log(username)
-    }
-  }, [])
-  console.log(username)
 
   useEffect(()=>{
 

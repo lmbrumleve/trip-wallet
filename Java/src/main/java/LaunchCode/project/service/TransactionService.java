@@ -1,6 +1,7 @@
 package LaunchCode.project.service;
 
 import LaunchCode.project.models.Transaction;
+import LaunchCode.project.models.Trip;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public interface TransactionService {
     void deleteTransaction(int id);
     void saveTransaction(Transaction transaction);
     List<Transaction> getAllTransactions();
+    List<Transaction> findByUsername(String username);
 
     List<Transaction> searchTransactionsByName(String name);
 
