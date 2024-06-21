@@ -8,6 +8,7 @@ import { DeleteForever, Star, StarBorder, Update } from "@mui/icons-material"
 import { yellow } from "@mui/material/colors"
 import checked from "@mui/material/Checkbox";
 import { enUS } from "date-fns/locale"
+import { jwtDecode } from 'jwt-decode'
 
 
 
@@ -19,6 +20,8 @@ export default function TransactionSearch(){
     const [transactions, setTransactions] = useState([])
     const[transaction, setTransaction] = useState({})
     const[checkedState, setCheckedState] = useState([]);
+    const[username, setUsername] = useState()
+    const[ansByUsername, setAnsByUsername] = useState([])
     const { ID } = useParams()
 
     const navigate = useNavigate();
@@ -26,51 +29,61 @@ export default function TransactionSearch(){
 
     const userDefaultCurrency = "USD"
 
+    //Use jwtDecode to get username from token in local storage
+  
+    useEffect(() => {
+        if (localStorage.getItem('token') != undefined) {
+        const tokenObj = jwtDecode(localStorage.getItem('token'));
+        setUsername(tokenObj.sub)
+        console.log(username)
+        }
+      }, [])
+      console.log(username)
+
     function searchTransaction() {
         if (sel=="name") {
             fetch(`http://localhost:8080/transactions/searchByName?name=${q}`, {
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')},
-            }).then(res=>res.json()).then((result)=>{setAns(result);})
+            }).then(res=>res.json()).then((result)=>{ setAns(result);})
+                //    for(let i=0; i<result.length; i++){
+                //     if (username === result[i].username){
+                //             ans.push(result[i])
+                //         }
+                //     };
+            // }) 
         } else if (sel == "amount") {
             if (isNaN(q)) {
                 console.log('error')
             } else {
                 fetch(`http://localhost:8080/transactions/searchByAmount?amount=${q}`, {
                 headers:{"Content-Type":"application/json",
-                Authorization: 'Bearer ' + localStorage.getItem('token')},
-                }).then(res=>res.json()).then((result)=>{setAns(result);})
+                Authorization: 'Bearer ' + localStorage.getItem('token')}, 
+                }).then(res=>res.json()).then((result)=>{ setAns(result);})
+                //    for(let i=0; i<result.length; i++){
+                //     if (username === result[i].username){
+                //             ans.push(result[i])
+                //         }
+                //     };
+                // }) 
             }
         }
 
-    
     }
 
+
     useEffect(()=>{
-        // setIsLoading(true)
-//            fetch("http://localhost:8080/transactions/getAll").then(res=>res.json()).then((result)=>{setTransactions(result);})
-        console.log("first useeffect");
         console.log(localStorage.getItem('token'));
-        fetch("http://localhost:8080/transactions/getAll", {
+        fetch("http://localhost:8080/transactions/getByUsername", {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + localStorage.getItem('token')
             }
         }).then(res=>res.json()).then((result)=>{setTransactions(result);})
 
-    //   navigate('/transactions/search')
-
-        // setIsLoading(false)
-
 
 },[])
-
-// if (isLoading) {
-//     return (<div>Fetching transactions from database</div>);
-// }
-
-
-// console.log(transactions)
+console.log(transactions)
 
 useEffect(()=>{
     console.log("second useeffect")
@@ -99,7 +112,7 @@ console.log(checkedState)
             console.log(error);
         })
     
-        fetch("http://localhost:8080/transactions/getAll", {
+        fetch("http://localhost:8080/transactions/getByUsername", {
             headers:{"Content-Type":"application/json",
                     Authorization: 'Bearer ' + localStorage.getItem('token')},
             }).then(res=>res.json()).then((result)=>{setTransactions(result);})
@@ -142,7 +155,19 @@ console.log(checkedState)
     //         window.location.reload(true);
     //     }
 
+useEffect(()=>{
+        for (let i=0; i < ans.length; i++) {
+            console.log(ans[i].username)
+            if (ans[i].username === username && ansByUsername.includes(ans[i]) === false) {
+                ansByUsername.push(ans[i])
+                console.log(ansByUsername)
+                setAns(ansByUsername);
 
+            }
+        }
+    }, [ans])
+        console.log(ansByUsername)
+        console.log(ans)
     return (
     <div>
         <NavBar/>
