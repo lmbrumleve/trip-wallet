@@ -19,6 +19,7 @@ import {
 import { userDefaultCurrency } from './ExchangeRatesTable.jsx';
 import 'chartjs-adapter-date-fns';
 import { useParams } from "react-router-dom";
+import { format } from 'date-fns';
 
 
 ChartJS.register(
@@ -89,17 +90,16 @@ const [rateArr, setRateArr] = useState([]);
 const chart = () => {
 
     for (let i=0; i<Object.keys(timeSeriesRates).length; i++) {
-      // console.log(Object.keys(timeSeriesRates)[i]);
       dateId = Object.keys(timeSeriesRates)[i] //access all of the dates
-      // console.log(dateId);
+      rate = timeSeriesRates[dateId][targetCurrency.toString()]
+      dateId = format(dateId, "MMM d")
+
+      if ((i%7) === 0) {
       dates.push(dateId);
       setDateArr(dates);
-      // console.log(timeSeriesRates[dateId][targetCurrency.toString()])
-      rate = timeSeriesRates[dateId][targetCurrency.toString()]
       rates.push(rate);
-    //   console.log(rates)
       setRateArr(rates);
-
+    }
     }
       console.log(dateArr);
       console.log(rateArr);
@@ -153,14 +153,16 @@ const options = {
 
 useEffect(() => {
     chart()
-}, [chartData, options, dateArr, rateArr, timeSeriesRates])
+}, [chartData])
 
 return(
     <>
         <NavBar/>
-
-        <h1>{userDefaultCurrency}/{targetCurrency} </h1>
-        <h2>{todayRate} </h2>
+        <br/>
+        <br/>
+        <br/>
+        <h1>2024 Data: {userDefaultCurrency}/{targetCurrency} </h1>
+        Today's Exchange Rate: <h2>{todayRate} </h2>
         <div style = {
             {height: '300px',
             width: '600px' }

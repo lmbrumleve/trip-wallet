@@ -359,7 +359,7 @@ console.log(favoriteByUsername)
                       }
                       // label = {data.target}
                       /></Tooltip>
-                      <Link to={`/timeSeriesGraph/${userDefaultCurrency}/${data.currencyCode}`}>{data.base}/{data.currencyCode}</Link></td>
+                      <Link to={`/timeSeriesGraph/${data.currencyCode}/${userDefaultCurrency}`}>{data.base}/{data.currencyCode}</Link></td>
                     <td>{data.rate}</td>
                     <td>{data.rateIncrease}</td>
                     </tr>
