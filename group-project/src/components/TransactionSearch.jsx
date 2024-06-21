@@ -47,16 +47,16 @@ export default function TransactionSearch(){
             Authorization: 'Bearer ' + localStorage.getItem('token')},
             }).then(res=>res.json()).then((result)=>{ setAns(result);})
 
-        // } else if (sel == "amount") {
-        //     if (isNaN(q)) {
-        //         console.log('error')
-        //     } else {
-        //         fetch(`http://localhost:8080/transactions/searchByAmount?amount=${q}`, {
-        //         headers:{"Content-Type":"application/json",
-        //         Authorization: 'Bearer ' + localStorage.getItem('token')}, 
-        //         }).then(res=>res.json()).then((result)=>{ setAns(result);})
+        } else if (sel == "amount") {
+            if (isNaN(q)) {
+                console.log('error')
+            } else {
+                fetch(`http://localhost:8080/transactions/searchByAmount?amount=${q}`, {
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}, 
+                }).then(res=>res.json()).then((result)=>{ setAns(result);})
 
-        //     }
+            }
         } else if (sel == "budgetCategory") {
 
                 fetch(`http://localhost:8080/transactions/searchByBudgetCategory?budgetCategory=${q}`, {
@@ -160,6 +160,8 @@ useEffect(()=>{
                 console.log(ansByUsername)
                 setAns(ansByUsername);
 
+            } else {
+                setAns(ansByUsername)
             }
         }
     }, [ans])
@@ -178,7 +180,7 @@ useEffect(()=>{
         <input className="input-format" type="text" name = {q} onChange = {(e)=>setQ(e.target.value)} />
         <select className="input-format" name = {sel} value={sel} onChange = {(e)=>setSel(e.target.value)}>
             <option value="name">Name of Transaction</option>
-            {/* <option value="amount">Amount of Transaction</option> */}
+            <option value="amount">Amount of Transaction</option>
             <option value="budgetCategory">Budget Category</option>
 
         </select>
