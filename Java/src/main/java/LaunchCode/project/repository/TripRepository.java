@@ -1,5 +1,6 @@
 package LaunchCode.project.repository;
 
+import LaunchCode.project.models.FavoriteRate;
 import LaunchCode.project.models.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface TripRepository extends JpaRepository<Trip, Integer> {
+
+    @Query(value="select * from Trip t where t.username=?", nativeQuery = true)
+    List<Trip> queryByUsername(String username);
     @Query(value="SELECT * FROM Trip t WHERE t.name like ?1", nativeQuery = true)
     List<Trip> getTripsByName(String name);
 

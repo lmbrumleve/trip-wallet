@@ -9,6 +9,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { enUS } from 'date-fns/locale';
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function ProfileCard() {
@@ -16,14 +17,26 @@ export default function ProfileCard() {
   const userDefaultCurrency = "USD"
   const [trips, setTrips] = useState([]);
   const [isShown, setIsShown] = useState(true);
+  const[username, setUsername] = useState();
 
   const navigate = useNavigate();
+
+  //Use jwtDecode to get username from token in local storage
+  
+  useEffect(() => {
+    if (localStorage.getItem('token') != undefined) {
+    const tokenObj = jwtDecode(localStorage.getItem('token'));
+    setUsername(tokenObj.sub)
+    console.log(username)
+    }
+  }, [])
+  console.log(username)
 
   useEffect(()=>{
 
     const fetchTrips = async ()=>{
         try{
-           const response = await fetch("http://localhost:8080/trips/getAll",{
+           const response = await fetch("http://localhost:8080/trips/getByUsername",{
 
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')}
