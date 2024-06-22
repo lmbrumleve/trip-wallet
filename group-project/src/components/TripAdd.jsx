@@ -31,6 +31,7 @@ export default function TripAdd() {
     const [endDate, setEndDate] = useState(new Date())
     const [duration, setDuration] = useState(0)
     const [username, setUsername] = useState("")
+    const [data, setData] = useState()
     // const [trip, setTrip] = useState({
     //     name: "",
     //     destination: "",
@@ -72,7 +73,21 @@ export default function TripAdd() {
 
     function addTrip(e) {
         e.preventDefault()
-        const trip = {name, destination, budget, username, startDate, endDate, duration}
+        const trip = {name, destination, budget, username, startDate, endDate, duration, 
+            fetchPhotoUrl: `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=b4d7879b676db4c084c8faa15e2abe8d&text=landmark&tags=${destination}&format=json&nojsoncallback=1`
+        }
+
+        fetch(trip.fetchPhotoUrl)
+          .then(res=>res.json())
+          .then((result)=>{setData(result.photos.photo[0]);})
+        console.log(data)
+        let photoServer = data.server;
+        let photoId = data.id;
+        let photoSecret = data.secret;
+            
+            let srcPhoto = `https://live.staticflickr.com/${photoServer}/${photoId}_${photoSecret}_b.jpg`
+            console.log(srcPhoto)
+        trip.photoUrl = srcPhoto
         console.log(trip)
         fetch("http://localhost:8080/trips/add", {
             method:"POST",

@@ -25,6 +25,8 @@ public class Trip {
 
     private double duration;
 
+    private String photoUrl;
+
     @JsonIgnore
     @OneToMany(mappedBy = "trip")
     private List<Transaction> transactions = new ArrayList<>();
@@ -100,5 +102,13 @@ public class Trip {
 
     public void setDuration(double duration) {
         this.duration = duration;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

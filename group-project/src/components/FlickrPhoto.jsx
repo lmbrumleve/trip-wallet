@@ -29,14 +29,10 @@ let photoSecret = data.secret;
 
 // console.log(photoServer)
 
-let srcPhoto = `https://live.staticflickr.com/${photoServer}/${photoId}_${photoSecret}_t.jpg`
+let srcPhoto = `https://live.staticflickr.com/${photoServer}/${photoId}_${photoSecret}_b.jpg`
 console.log(srcPhoto)
 
 console.log(srcPhoto)
-// useEffect(()=>{
-//     setPhoto(`https://live.staticflickr.com/${data.photos.photo[0].server}/${data.photos.photo[0].id}_${data.photos.photo[0].secret}_b.jpg`)
-// }, [jsonPhoto])
-
 
   return (
     <img src={srcPhoto}></img>

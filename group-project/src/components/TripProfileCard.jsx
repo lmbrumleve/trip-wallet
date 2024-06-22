@@ -38,13 +38,13 @@ export default function ProfileCard(props) {
         }
     }
         fetchTrips();
-        console.log(trips);
+        // console.log(trips[0].destination);
 }, []);
 console.log(trips)
     //FETCH PHOTO:
     const fetchJsonPhoto = async () => {
       try{
-          const response = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=b4d7879b676db4c084c8faa15e2abe8d&text=landmark&tags=indonesia&format=json&nojsoncallback=1`)
+          const response = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=b4d7879b676db4c084c8faa15e2abe8d&text=landmark&tags=malaysia&format=json&nojsoncallback=1`)
           .then(res=>res.json())
           .then((result)=>{setData(result.photos.photo[0]);})
        }
@@ -88,7 +88,6 @@ const handleUpdate = (e,id)=>{
     {trips.map((trip) =>(
     <Card style={{ width: '18rem' }} className='shadow'>
     <Card.Img variant="top" src={srcPhoto}></Card.Img>    
-
     <Card.Body>
       <div 
       className="position-top-right button-spacing"
@@ -101,8 +100,6 @@ const handleUpdate = (e,id)=>{
       <div>Update Trip</div>
     )} */}
     </div>
-      <br/>
-      <br/>
       <h4>{trip.destination} </h4>
       <hr/>
 
