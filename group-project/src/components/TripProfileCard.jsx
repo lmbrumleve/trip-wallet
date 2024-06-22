@@ -18,6 +18,7 @@ export default function ProfileCard(props) {
   const [trips, setTrips] = useState([]);
   const [isShown, setIsShown] = useState(true);
   const[username, setUsername] = useState();
+  const[data, setData] = useState({});
 
   const navigate = useNavigate();
 
@@ -39,6 +40,33 @@ export default function ProfileCard(props) {
         fetchTrips();
         console.log(trips);
 }, []);
+console.log(trips)
+    //FETCH PHOTO:
+    const fetchJsonPhoto = async () => {
+      try{
+          const response = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=b4d7879b676db4c084c8faa15e2abe8d&text=landmark&tags=indonesia&format=json&nojsoncallback=1`)
+          .then(res=>res.json())
+          .then((result)=>{setData(result.photos.photo[0]);})
+       }
+       catch(error){
+           console.log(error);
+       }
+        };
+  
+  useEffect(() => {
+          fetchJsonPhoto();
+  }, []);
+  
+  console.log(data)
+  
+  let photoServer = data.server;
+  let photoId = data.id;
+  let photoSecret = data.secret;
+  
+  // console.log(photoServer)
+  
+  let srcPhoto = `https://live.staticflickr.com/${photoServer}/${photoId}_${photoSecret}_b.jpg`
+  console.log(srcPhoto)
 
 const handleUpdate = (e,id)=>{
   e.preventDefault();
@@ -59,7 +87,8 @@ const handleUpdate = (e,id)=>{
     >
     {trips.map((trip) =>(
     <Card style={{ width: '18rem' }} className='shadow'>
-    {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+    <Card.Img variant="top" src={srcPhoto}></Card.Img>    
+
     <Card.Body>
       <div 
       className="position-top-right button-spacing"
