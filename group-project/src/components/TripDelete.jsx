@@ -23,6 +23,8 @@ export default function tripDelete (){
             }).then(()=>console.log("record deleted")).then(()=>navigate("/myTrips"))
         }
         deleteTrip(id);
+        deleteTrip(id);
+
       }, []);
 
 }
