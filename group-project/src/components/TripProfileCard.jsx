@@ -22,7 +22,7 @@ export default function ProfileCard(props) {
 
   const navigate = useNavigate();
 
-
+  
   useEffect(()=>{
 
     const fetchTrips = async ()=>{
@@ -36,6 +36,7 @@ export default function ProfileCard(props) {
         catch(error){
             console.log(error);
         }
+
     }
         fetchTrips();
         // console.log(trips[0].destination);
@@ -62,7 +63,7 @@ const handleUpdate = (e,id)=>{
     >
     {trips.map((trip) =>(
     <Card style={{ width: '18rem' }} className='shadow'>
-    <Card.Img variant="top" src={trip.photoUrl}></Card.Img>    
+    <Card.Img variant="top" height= "150px" src={trip.photoUrl}></Card.Img>    
     <Card.Body>
       <div 
       className="position-top-right button-spacing"

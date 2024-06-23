@@ -71,13 +71,13 @@ export default function TripAdd() {
  
           };
 
-    function addTrip(e) {
+    async function addTrip(e) {
         e.preventDefault()
         const trip = {name, destination, budget, username, startDate, endDate, duration, 
-            fetchPhotoUrl: `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=b4d7879b676db4c084c8faa15e2abe8d&text=landmark&tags=${destination}&format=json&nojsoncallback=1`
+            fetchPhotoUrl: `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=b4d7879b676db4c084c8faa15e2abe8d&text=scenicview&tags=${destination}&format=json&nojsoncallback=1`
         }
 
-        fetch(trip.fetchPhotoUrl)
+       await fetch(trip.fetchPhotoUrl)
           .then(res=>res.json())
           .then((result)=>{setData(result.photos.photo[0]);})
         console.log(data)
@@ -89,7 +89,8 @@ export default function TripAdd() {
             console.log(srcPhoto)
         trip.photoUrl = srcPhoto
         console.log(trip)
-        fetch("http://localhost:8080/trips/add", {
+
+        await fetch("http://localhost:8080/trips/add", {
             method:"POST",
             headers:{"Content-Type":"application/json",
             Authorization: 'Bearer ' + localStorage.getItem('token')},
