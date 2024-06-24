@@ -75,13 +75,13 @@
 }
 
 .green-arrow {
-  color: green;
+  color: #14A44D;
   font-size: 24px; /* Adjust the size as needed */
   font-weight: 900;
 }
 
 .red-arrow {
-  color: red;
+  color: #ef476f;
   font-size: 24px; /* Adjust the size as needed */
   font-weight: 900;
 }

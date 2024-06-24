@@ -10,7 +10,7 @@ import checked from "@mui/material/Checkbox";
 import { jwtDecode } from 'jwt-decode';
 import { Token } from '@mui/icons-material';
 import { id } from 'date-fns/locale';
-import { pink } from '@mui/material/colors';
+import { blue, pink } from '@mui/material/colors';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import { Tooltip } from '@mui/material';
 import '../App.css';
@@ -356,7 +356,7 @@ console.log(favoriteByUsername)
                           control = {
                               <Checkbox key={checked[data.id]}
                                   icon = {<FavoriteBorderIcon color="disabled"/>}
-                                  checkedIcon = {<FavoriteIcon sx={{ color: pink[500] }} />}
+                                  checkedIcon = {<FavoriteIcon sx={{ color: blue }} />}
                                   checked = {data.favorite}
                                   onClick = {(e)=>handleFavorite(e, data.id, data.favorite)}
 
