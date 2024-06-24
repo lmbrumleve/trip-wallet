@@ -73,3 +73,15 @@
   flex-wrap: wrap;
   gap: 0px;
 }
+
+.green-arrow {
+  color: green;
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: 900;
+}
+
+.red-arrow {
+  color: red;
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: 900;
+}
