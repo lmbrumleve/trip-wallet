@@ -13,6 +13,8 @@ import { id } from 'date-fns/locale';
 import { pink } from '@mui/material/colors';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import { Tooltip } from '@mui/material';
+import '../App.css';
+
 
 export default function ExchangeRatesTable () {
 
@@ -261,11 +263,11 @@ yesterdayTargetRateObj =
 // console.log(yesterdayTargetRateObj);
 
 if ((targetExchangeRate - yesterdayTargetExchangeRate) > 0) {
-  targetRateObj.rateIncrease = "🔺";
+  targetRateObj.rateIncrease = "▲";
   // console.log(targetRateObj.rateIncrease);
   // console.log(`${userDefaultCurrency}/${targetCurrency} the rate went up`);
 } else if ((targetExchangeRate - yesterdayTargetExchangeRate) < 0){
-  targetRateObj.rateIncrease = "🔻";
+  targetRateObj.rateIncrease = "▼";
   // console.log(targetRateObj.rateIncrease);
   // console.log(`${userDefaultCurrency}/${targetCurrency} the rate went down`);
 } else {
@@ -347,9 +349,6 @@ console.log(favoriteByUsername)
         {allRates?.map((data) =>{
             return (
                 <tbody>
-                 
-
-                  
                     <tr>
                     <td>
                                          
@@ -367,7 +366,15 @@ console.log(favoriteByUsername)
                       /></Tooltip>
                       <Link to={`/timeSeriesGraph/${userDefaultCurrency}/${data.currencyCode}`}>{data.currencyCode}</Link></td>
                     <td>{data.rate}</td>
-                    <td>{data.rateIncrease}</td>
+                    <td>      
+                      <span
+                        className={
+                          data.rateIncrease === "▲" ? "green-arrow" : 
+                          data.rateIncrease === "▼" ? "red-arrow" : ""
+                        }
+                      >{data.rateIncrease}
+                      </span>
+                      </td>
                     </tr>
                 </tbody>
             )
