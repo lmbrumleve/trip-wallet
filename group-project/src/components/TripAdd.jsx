@@ -7,6 +7,7 @@ import ReactDatePicker from "react-datepicker"
 import { FaCalendarAlt } from "react-icons/fa"
 import { Card } from "react-bootstrap"
 
+
 function CustomInput({value, onClick}){
 
 
@@ -45,6 +46,10 @@ export default function TripAdd() {
 
     const navigate = useNavigate();
 
+    require('dotenv').config();
+
+    const apiKey=process.env.API_KEY;
+
     //Use jwtDecode to get username from token in local storage
 
     useEffect(() => {
@@ -74,7 +79,7 @@ export default function TripAdd() {
     async function addTrip(e) {
         e.preventDefault()
         const trip = {name, destination, budget, username, startDate, endDate, duration, 
-            fetchPhotoUrl: `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=b4d7879b676db4c084c8faa15e2abe8d&text=scenicview&tags=${destination}&format=json&nojsoncallback=1`
+            fetchPhotoUrl: `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=scenicview&tags=${destination}&format=json&nojsoncallback=1`
         }
 
        await fetch(trip.fetchPhotoUrl)
