@@ -19,7 +19,6 @@ import java.util.Optional;
 @Table(name = "favoriteRate")
 @RequestMapping("/favorite")
 public class FavoriteRateController {
-
     @Autowired
     private FavoriteRateService favoriteRateService;
     @GetMapping("/entries")
@@ -29,22 +28,17 @@ public class FavoriteRateController {
         List<FavoriteRate> favoriteRates = favoriteRateService.findByUsername(username);
         return ResponseEntity.ok(favoriteRates);
     }
-
     @GetMapping("/{id}")
     public Optional<FavoriteRate> favoriteRateById (@PathVariable int id){
         return favoriteRateService.favoriteRateById(id);
     }
-
     @PostMapping("/add")
     public String addFavoriteRate(@RequestBody FavoriteRate favoriteRate) {
         favoriteRateService.saveFavoriteRate(favoriteRate);
         return "New favorite saved";
     }
-
     @PutMapping("/{id}")
     public String updateFavoriteRate (@RequestBody FavoriteRate favoriteRate, @PathVariable int id){
-        System.out.println(favoriteRate);
-        System.out.println(id);
         favoriteRateService.updateFavoriteRate(favoriteRate, id);
         return "Favorite Rate Updated";
     }
