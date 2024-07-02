@@ -9,7 +9,6 @@ import UpdateIcon from '@mui/icons-material/Update';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { enUS } from 'date-fns/locale';
-import FlickrPhoto from './FlickrPhoto';
 
 
 export default function ProfileCard(props) {
