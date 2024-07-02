@@ -8,6 +8,7 @@ import { FaCalendarAlt } from "react-icons/fa"
 import { Card } from "react-bootstrap"
 
 
+
 function CustomInput({value, onClick}){
 
 
@@ -46,10 +47,8 @@ export default function TripAdd() {
 
     const navigate = useNavigate();
 
-    require('dotenv').config();
-
-    const apiKey=process.env.API_KEY;
-
+    const apiKey=import.meta.env.VITE_API_KEY;
+    
     //Use jwtDecode to get username from token in local storage
 
     useEffect(() => {
@@ -82,7 +81,7 @@ export default function TripAdd() {
             fetchPhotoUrl: `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=scenicview&tags=${destination}&format=json&nojsoncallback=1`
         }
 
-       await fetch(trip.fetchPhotoUrl)
+        await fetch(trip.fetchPhotoUrl)
           .then(res=>res.json())
           .then((result)=>{setData(result.photos.photo[0]);})
         console.log(data)
