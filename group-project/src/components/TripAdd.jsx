@@ -84,13 +84,17 @@ export default function TripAdd() {
         await fetch(trip.fetchPhotoUrl)
           .then(res=>res.json())
           .then((result)=>{setData(result.photos.photo[0]);})
+
         console.log(data)
+
         let photoServer = data.server;
         let photoId = data.id;
         let photoSecret = data.secret;
+        let photoSize = "b"
             
-            let srcPhoto = `https://live.staticflickr.com/${photoServer}/${photoId}_${photoSecret}_b.jpg`
+            let srcPhoto = `https://live.staticflickr.com/${photoServer}/${photoId}_${photoSecret}_${photoSize}.jpg`
             console.log(srcPhoto)
+            
         trip.photoUrl = srcPhoto
         console.log(trip)
 
