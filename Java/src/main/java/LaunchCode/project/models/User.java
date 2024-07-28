@@ -23,6 +23,8 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String currency;
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user")
@@ -91,6 +93,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Role getRole() {

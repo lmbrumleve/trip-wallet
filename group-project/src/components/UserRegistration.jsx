@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NavBar from "./NavBar.jsx";
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios';
@@ -10,10 +10,31 @@ export default function UserRegistration() {
         password: '',
         firstName: '',
         lastName: '',
+        currency: '',
         role: 'USER'
     });
 
     const navigate = useNavigate();
+
+    const[currencies, setCurrencies] = useState([]);
+
+    //FETCH CURRENCIES:
+const fetchCurrencies = async () => {
+    try{
+        const response = await fetch("https://api.frankfurter.app/currencies").then(res=>res.json()).then((result)=>{setCurrencies(result);})
+     }
+     catch(error){
+         console.log(error);
+     }
+
+      };
+
+useEffect(() => {
+        fetchCurrencies();
+}, []);
+
+console.log(Object.keys(currencies));
+const currencyArr = Object.keys(currencies);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -92,6 +113,21 @@ export default function UserRegistration() {
                 <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} required />
             </div>
             <br />
+
+            {/* <div className="form-group"> */}
+                <label htmlFor="currency">Preferred Currency</label>
+                <br />
+                <select  id="currency" name="currency" onChange = {(e)=>handleChange(e)}>
+                    <option value="">-</option>
+                    {currencyArr.map((ans) => {
+                            return (
+                            <option value={ans}>{ans}</option>
+                            )
+                            })}
+                            </select>
+
+            {/* </div> */}
+            <br/>
 
             <input type="submit" className="btn btn-primary trip-button" onClick={handleSubmit}/>
         </form>
