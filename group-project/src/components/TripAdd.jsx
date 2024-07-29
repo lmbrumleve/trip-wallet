@@ -6,6 +6,7 @@ import CalendarInput from "./CalendarInput.jsx"
 import ReactDatePicker from "react-datepicker"
 import { FaCalendarAlt } from "react-icons/fa"
 import { Card } from "react-bootstrap"
+import { userDefaultCurrency } from './ExchangeRatesTable.jsx'
 
 
 
@@ -43,7 +44,7 @@ export default function TripAdd() {
     //     endDate: ""
     // })
 
-    const userDefaultCurrency = "USD";
+    const [userDefaultCurrency, setUserDefaultCurrency] = useState();
 
     const navigate = useNavigate();
 
@@ -59,6 +60,26 @@ export default function TripAdd() {
         }
         }, [])
         console.log(username)
+
+        useEffect(()=>{
+
+        const fetchCurrencyByUsername = async ()=>{
+            try{
+               const response = await fetch("http://localhost:8080/currency/getByUsername",{
+    
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+            }
+            catch(error){
+                console.log(error);
+            }
+     
+        }
+            fetchCurrencyByUsername();
+            // console.log(trips[0].destination);
+    }, []);
+    console.log(userDefaultCurrency)
 
         const handleChange = (range) => {
             const [startDate, endDate] = range;
