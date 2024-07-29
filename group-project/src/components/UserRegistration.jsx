@@ -115,7 +115,7 @@ const currencyArr = Object.keys(currencies);
             <br />
 
             {/* <div className="form-group"> */}
-                <label htmlFor="currency">Preferred Currency</label>
+                <label for="currency">Preferred Currency</label>
                 <br />
                 <select  id="currency" name="currency" onChange = {(e)=>handleChange(e)}>
                     <option value="">-</option>
