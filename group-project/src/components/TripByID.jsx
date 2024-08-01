@@ -18,10 +18,31 @@ export default function TripByID(props) {
     const [transactions, setTransactions] = useState([])
     const [totalSpent, setTotalSpent] = useState([])
     const [totalBudgeted, setTotalBudgeted] = useState([])
-
-    const userDefaultCurrency = "USD"
+    const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
 
     const navigate = useNavigate();
+
+    //fetch user's preferred currency
+
+    useEffect(()=>{
+
+        const fetchCurrencyByUsername = async ()=>{
+            try{
+                const response = await fetch("http://localhost:8080/currency/getByUsername",{
+    
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+            }
+            catch(error){
+                console.log(error);
+            }
+        
+        }
+            fetchCurrencyByUsername();
+            // console.log(trips[0].destination);
+    }, []);
+    console.log(userDefaultCurrency)
 
     useEffect(()=>{
         fetch("http://localhost:8080/trips/ID/" + ID, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}).then(res=>res.json()).then((result)=>{setTrip(result);})
@@ -116,7 +137,7 @@ export default function TripByID(props) {
                 {ans.description}</td>
                 <td>{ans.budgetCategory}</td>
                 <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
-                <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+                <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})}</td>
 {/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
                 <td><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}><Update/></Button>
                 <Button className="btn btn-outline-secondary trip-button" size="sm" onClick={(e)=>handleDelete(e,ans.id,ans.trip.id)}><DeleteForever/></Button></td>
