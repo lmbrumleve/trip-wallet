@@ -61,6 +61,8 @@ export default function TripAdd() {
         }, [])
         console.log(username)
 
+        //fetch user's preferred currency
+
         useEffect(()=>{
 
         const fetchCurrencyByUsername = async ()=>{

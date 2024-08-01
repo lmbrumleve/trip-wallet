@@ -9,17 +9,51 @@ import UpdateIcon from '@mui/icons-material/Update';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { enUS } from 'date-fns/locale';
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function ProfileCard(props) {
 
-  const userDefaultCurrency = "USD"
+  const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
   const [trips, setTrips] = useState([]);
   const [isShown, setIsShown] = useState(true);
   const[username, setUsername] = useState();
   const[data, setData] = useState({});
 
   const navigate = useNavigate();
+
+      //Use jwtDecode to get username from token in local storage
+
+      useEffect(() => {
+        if (localStorage.getItem('token') != undefined) {
+        const tokenObj = jwtDecode(localStorage.getItem('token'));
+        setUsername(tokenObj.sub)
+        console.log(username)
+        }
+        }, [])
+        console.log(username)
+
+        //fetch user's preferred currency
+
+        useEffect(()=>{
+
+        const fetchCurrencyByUsername = async ()=>{
+            try{
+               const response = await fetch("http://localhost:8080/currency/getByUsername",{
+    
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+            }
+            catch(error){
+                console.log(error);
+            }
+     
+        }
+            fetchCurrencyByUsername();
+            // console.log(trips[0].destination);
+    }, []);
+    console.log(userDefaultCurrency)
 
   
   useEffect(()=>{
@@ -82,7 +116,7 @@ const handleUpdate = (e,id)=>{
       {trip.name}
       </Card.Text>
       <Card.Text>Leaving {format(trip.startDate, 'MMM d, yyy')} for {trip.duration} days</Card.Text>
-      <Card.Text>{(trip.budget).toLocaleString(enUS, {style: "currency", currency: "USD"})} USD</Card.Text>
+      <Card.Text>{(trip.budget).toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})}</Card.Text>
 
         <Link className="btn btn-primary" to={`/trips/ID/${trip.id}`}>View Trip Profile</Link>
     </Card.Body>
