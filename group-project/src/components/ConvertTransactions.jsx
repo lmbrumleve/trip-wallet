@@ -12,12 +12,36 @@ import { enUS } from "date-fns/locale";
         const [exchangeRates, setExchangeRates] = useState([])
         const [convertedAmount, setConvertedAmount] = useState(0)
         const [amount, setAmount] = useState(0)
+        const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
 
         const [conversionInputs, setConversionInputs] = useState({
             amount: 0,
             start: "USD",
             end: "USD",
         });
+
+    //fetch user's preferred currency
+
+    useEffect(()=>{
+
+        const fetchCurrencyByUsername = async ()=>{
+            try{
+                const response = await fetch("http://localhost:8080/currency/getByUsername",{
+    
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+            }
+            catch(error){
+                console.log(error);
+            }
+        
+        }
+            fetchCurrencyByUsername();
+            // console.log(trips[0].destination);
+    }, []);
+    console.log(userDefaultCurrency)
+
 
         const fetchExchangeRates = async () => {
             await axios.get(`https://api.frankfurter.app/latest?from=${conversionInputs.start}`).then((res) => {
@@ -109,7 +133,7 @@ const currencyArr = Object.keys(currencies);
 
                 </form>
                 <br/>
-                <h2> {amount} {conversionInputs.start} turns into {convertedAmount.toLocaleString(enUS, {style: "currency", currency: conversionInputs.end})}  </h2>
+                <h2> {convertedAmount.toLocaleString(enUS, {style: "currency", currency: conversionInputs.end})}  </h2>
             </>
         )
     }

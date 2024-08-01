@@ -64,7 +64,7 @@ export default function TripByID(props) {
     }
 
     const convertCurrency = async (currency, amount) =>{
-        const response = await fetch("api.frankfurter.app/latest?amount=" + {amount} + "&from=" + {currency} + "&to=" + defaultCurrency);
+        const response = await fetch("api.frankfurter.app/latest?amount=" + {amount} + "&from=" + {currency} + "&to=" + {userDefaultCurrency});
     }
 
     console.log(transactions)
@@ -136,7 +136,7 @@ export default function TripByID(props) {
                 <td className="text-start"><p className="fw-bold text-nowrap">Payment to {ans.name} </p>
                 {ans.description}</td>
                 <td>{ans.budgetCategory}</td>
-                <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
+                <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency.toString()})}</td>
                 <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})}</td>
 {/*                 <td>{convertCurrency(ans.currency, ans.amount)}</td> */}
                 <td><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency,trip.id)}><Update/></Button>
@@ -150,7 +150,9 @@ export default function TripByID(props) {
                     <td className="bold-font">Total Spent: </td>
 
 
-                    <td className="bold-font">{totalSpent.toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})}</td>
+                    <td className="bold-font">{totalSpent}</td>
+                     {/* .toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()}) */}
+                    {/* }</td> */}
                     <td></td>
                     <td></td>
                 </tr>

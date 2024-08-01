@@ -10,7 +10,7 @@ import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 export default function Trips() {
     const [trips, setTrips] = useState([])
 
-    const userDefaultCurrency = "USD";
+    const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
 
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -19,6 +19,28 @@ export default function Trips() {
       );
 
     const navigate = useNavigate();
+
+        //fetch user's preferred currency
+
+        useEffect(()=>{
+
+            const fetchCurrencyByUsername = async ()=>{
+                try{
+                    const response = await fetch("http://localhost:8080/currency/getByUsername",{
+        
+                    headers:{"Content-Type":"application/json",
+                    Authorization: 'Bearer ' + localStorage.getItem('token')}
+                }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+                }
+                catch(error){
+                    console.log(error);
+                }
+            
+            }
+                fetchCurrencyByUsername();
+                // console.log(trips[0].destination);
+        }, []);
+        console.log(userDefaultCurrency)
 
     useEffect(()=>{
         fetch("http://localhost:8080/trips/getAll", {
