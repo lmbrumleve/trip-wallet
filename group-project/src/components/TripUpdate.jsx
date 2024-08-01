@@ -20,7 +20,30 @@ import { Tooltip } from '@mui/material'
         destination: "",
         budget: 0,
     })
-        const userDefaultCurrency = "USD";
+    
+    const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
+
+        //fetch user's preferred currency
+
+        useEffect(()=>{
+
+            const fetchCurrencyByUsername = async ()=>{
+                try{
+                    const response = await fetch("http://localhost:8080/currency/getByUsername",{
+        
+                    headers:{"Content-Type":"application/json",
+                    Authorization: 'Bearer ' + localStorage.getItem('token')}
+                }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+                }
+                catch(error){
+                    console.log(error);
+                }
+            
+            }
+                fetchCurrencyByUsername();
+                // console.log(trips[0].destination);
+        }, []);
+        console.log(userDefaultCurrency)
 
     useEffect(()=>{
 

@@ -18,7 +18,7 @@ import '../App.css';
 
 export default function ExchangeRatesTable () {
 
-  const [ userDefaultCurrency, setUserDefaultCurrency ] = useState("USD");
+  const [ userDefaultCurrency, setUserDefaultCurrency ] = useState("");
   const [date, setDate] = useState("");
   const [exchangeRates, setExchangeRates] = useState("");
   const [currencyExchangeRates, setCurrencyExchangeRates] = useState([]);
@@ -40,6 +40,28 @@ export default function ExchangeRatesTable () {
         }
       }, [])
       console.log(username)
+
+    //fetch user's preferred currency
+
+    useEffect(()=>{
+
+      const fetchCurrencyByUsername = async ()=>{
+          try{
+              const response = await fetch("http://localhost:8080/currency/getByUsername",{
+  
+              headers:{"Content-Type":"application/json",
+              Authorization: 'Bearer ' + localStorage.getItem('token')}
+          }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+          }
+          catch(error){
+              console.log(error);
+          }
+      
+      }
+          fetchCurrencyByUsername();
+          // console.log(trips[0].destination);
+  }, []);
+  console.log(userDefaultCurrency)
 
 //Fetch Currency Codes
 
@@ -148,7 +170,7 @@ console.log(favoriteByUsername);
     useEffect(() => {
     fetchDate();
     }, []);
-
+console.log(userDefaultCurrency)
   //FETCH RATES:
 
   const fetchExchangeRates = async () => {
@@ -341,7 +363,7 @@ console.log(favoriteByUsername)
           <th>Rate</th>
           <th>Change</th> */}
           <td>Currency</td>
-          <td>1.00 USD</td>
+          <td>1.00 {userDefaultCurrency}</td>
           <td>Change</td>
         </tr>
       </thead>

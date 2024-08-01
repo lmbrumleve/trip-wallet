@@ -225,8 +225,10 @@ console.log(totalSpent)
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td className="bold-font">Total Spent: </td>
-                    <td className="bold-font">{totalSpent.toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+                    <td className="bold-font">Total Spent ({userDefaultCurrency}): </td>
+                    <td className="bold-font">{totalSpent
+                    // .toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})
+                    }</td>
                     <td></td>
                 </tr>
                 </tbody>

@@ -28,8 +28,29 @@ export default function transactionUpdate(props) {
     const [currency, setCurrency] = useState({});
     const [exchangeRates, setExchangeRates] = useState("");
     const [currencyExchangeRates, setCurrencyExchangeRates] = useState([]);
+    const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
 
-    const userDefaultCurrency = "USD"
+        //fetch user's preferred currency
+
+        useEffect(()=>{
+
+            const fetchCurrencyByUsername = async ()=>{
+                try{
+                    const response = await fetch("http://localhost:8080/currency/getByUsername",{
+        
+                    headers:{"Content-Type":"application/json",
+                    Authorization: 'Bearer ' + localStorage.getItem('token')}
+                }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+                }
+                catch(error){
+                    console.log(error);
+                }
+            
+            }
+                fetchCurrencyByUsername();
+                // console.log(trips[0].destination);
+        }, []);
+        console.log(userDefaultCurrency)
 
     useEffect(()=>{
 

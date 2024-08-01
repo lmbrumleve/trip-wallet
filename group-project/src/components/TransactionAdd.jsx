@@ -20,8 +20,7 @@ export default function TransactionAdd(props) {
     const[transactionExchangeRate, setTransactionExchangeRate] = useState([]);
     const[convertedAmount, setConvertedAmount] =useState([]);
     const[budgetCategory, setBudgetCategory] = useState("");
-    
-    const userDefaultCurrency = "USD"
+    const[userDefaultCurrency, setUserDefaultCurrency] = useState("");
     const navigate = useNavigate();
     
 
@@ -35,6 +34,28 @@ export default function TransactionAdd(props) {
         }
       }, [])
       console.log(username)
+
+          //fetch user's preferred currency
+
+    useEffect(()=>{
+
+        const fetchCurrencyByUsername = async ()=>{
+            try{
+                const response = await fetch("http://localhost:8080/currency/getByUsername",{
+    
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+            }
+            catch(error){
+                console.log(error);
+            }
+        
+        }
+            fetchCurrencyByUsername();
+            // console.log(trips[0].destination);
+    }, []);
+    console.log(userDefaultCurrency)
 
     useEffect(() => {
         fetchTransactionExchangeRate();
@@ -113,15 +134,14 @@ const currencyArr = Object.keys(currencies);
     //FETCH SPECIFIC EXCHANGE RATE
     const fetchTransactionExchangeRate = async () => {
         try {
-            const result = await fetch(`http://api.frankfurter.app/latest?from=${currency}&to=${userDefaultCurrency}`).then(res=>res.json()).then((result)=>{setTransactionExchangeRate(result.rates[userDefaultCurrency]);})
+            const result = await fetch(`http://api.frankfurter.app/latest?from=${currency}&to=${userDefaultCurrency.toString()}`).then(res=>res.json()).then((result)=>{setTransactionExchangeRate(result.rates[userDefaultCurrency]);})
         }
         catch(error){
             console.log(error);
         }
    
          };
-
-
+console.log(transactionExchangeRate);
     return(
     <div>
         <NavBar/>
