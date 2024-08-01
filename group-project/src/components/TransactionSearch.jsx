@@ -23,11 +23,8 @@ export default function TransactionSearch(){
     const[username, setUsername] = useState()
     const[ansByUsername, setAnsByUsername] = useState([])
     const { ID } = useParams()
-
     const navigate = useNavigate();
-
-
-    const userDefaultCurrency = "USD"
+    const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
 
     //Use jwtDecode to get username from token in local storage
   
@@ -39,6 +36,28 @@ export default function TransactionSearch(){
         }
       }, [])
       console.log(username)
+
+        //fetch user's preferred currency
+
+        useEffect(()=>{
+
+            const fetchCurrencyByUsername = async ()=>{
+                try{
+                   const response = await fetch("http://localhost:8080/currency/getByUsername",{
+        
+                    headers:{"Content-Type":"application/json",
+                    Authorization: 'Bearer ' + localStorage.getItem('token')}
+                }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+                }
+                catch(error){
+                    console.log(error);
+                }
+         
+            }
+                fetchCurrencyByUsername();
+                // console.log(trips[0].destination);
+        }, []);
+        console.log(userDefaultCurrency)
 
     function searchTransaction() {
         if (sel=="name") {
@@ -167,6 +186,8 @@ useEffect(()=>{
     }, [ans])
         console.log(ansByUsername)
         console.log(ans)
+    
+    
     return (
     <div>
         <NavBar/>
@@ -201,7 +222,7 @@ useEffect(()=>{
                 <th>Trip</th>
                 <th>Category</th>
                 <th>Amount (Local)</th>
-                <th>Amount (USD)</th>
+                <th>Amount ({userDefaultCurrency.toString()})</th>
                 <th></th>
             </tr>
             </thead>
@@ -230,7 +251,7 @@ useEffect(()=>{
                 <td><Link to={`/trips/ID/${a.trip.id}`}>{a.trip.destination} ({a.trip.name})</Link></td>
                 <td>{a.budgetCategory}</td>
                 <td>{(a.amount).toLocaleString(enUS, {style: "currency", currency: a.currency})} </td>
-                <td>{(a.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+                <td>{(a.convertedAmount).toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})}</td>
 
                 <td><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></Button>
                     <Button className="btn btn-outline-secondary trip-button" size="sm" onClick={(e)=>handleDelete(e,ans.id,ans.tripId)}><DeleteForever/></Button></td>

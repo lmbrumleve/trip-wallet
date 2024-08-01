@@ -150,7 +150,7 @@ export default function TripByID(props) {
                     <td className="bold-font">Total Spent: </td>
 
 
-                    <td className="bold-font">{totalSpent.toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+                    <td className="bold-font">{totalSpent.toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})}</td>
                     <td></td>
                     <td></td>
                 </tr>

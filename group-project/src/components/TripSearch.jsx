@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NavBar from "./NavBar"
 import { Card, Table } from 'react-bootstrap'
 import { jwtDecode } from 'jwt-decode'
+import { enUS } from 'date-fns/locale'
 
 
 export default function TripSearch(){
@@ -11,6 +12,7 @@ export default function TripSearch(){
     const [ans, setAns] = useState([])
     const [username, setUsername] = useState()
     const [ansByUsername, setAnsByUsername] = useState([])
+    const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
 
         //Use jwtDecode to get username from token in local storage
   
@@ -22,6 +24,28 @@ export default function TripSearch(){
             }
           }, [])
           console.log(username)
+
+   //fetch user's preferred currency
+
+   useEffect(()=>{
+
+    const fetchCurrencyByUsername = async ()=>{
+        try{
+            const response = await fetch("http://localhost:8080/currency/getByUsername",{
+
+            headers:{"Content-Type":"application/json",
+            Authorization: 'Bearer ' + localStorage.getItem('token')}
+        }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+        }
+        catch(error){
+            console.log(error);
+        }
+    
+    }
+        fetchCurrencyByUsername();
+        // console.log(trips[0].destination);
+}, []);
+console.log(userDefaultCurrency)
 
     function searchTrip() {
         if (sel=="name") {
@@ -106,7 +130,7 @@ export default function TripSearch(){
                 <td>{ans1.id}</td>
                 <td>{ans1.name}</td>
                 <td>{ans1.destination}</td>
-                <td>{ans1.budget}</td>
+                <td>{ans1.budget.toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})}</td>
             </tr>
             ))}
             </tbody>

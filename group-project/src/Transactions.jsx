@@ -30,8 +30,30 @@ export default function Transactions(props) {
     const[checkedState, setCheckedState] = useState([]);
     const[totalSpent, setTotalSpent] = useState([]);
 
-    const userDefaultCurrency = "USD";
+    const [userDefaultCurrency, setUserDefaultCurrency] = useState("");
     const navigate = useNavigate();
+
+    //fetch user's preferred currency
+
+    useEffect(()=>{
+
+        const fetchCurrencyByUsername = async ()=>{
+            try{
+                const response = await fetch("http://localhost:8080/currency/getByUsername",{
+    
+                headers:{"Content-Type":"application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token')}
+            }).then(res=>res.json()).then((result)=>{setUserDefaultCurrency(result.currency);})
+            }
+            catch(error){
+                console.log(error);
+            }
+        
+        }
+            fetchCurrencyByUsername();
+            // console.log(trips[0].destination);
+    }, []);
+    console.log(userDefaultCurrency)
 
     useEffect(()=>{
             setIsLoading(true)
@@ -160,7 +182,7 @@ console.log(totalSpent)
                     <th>Trip</th>
                     <th>Category</th>
                     <th>Amount (Local)</th>
-                    <th>Amount (USD)</th>
+                    <th>Amount ({userDefaultCurrency.toString()})</th>
                     <th></th>
 
                 </tr>
@@ -189,7 +211,7 @@ console.log(totalSpent)
                     <td><Tooltip title="Navigate to Trip Profile"><Link to={`/trips/ID/${ans.trip.id}`}>{ans.trip.destination} ({ans.trip.name})</Link></Tooltip></td>
                     <td>{ans.budgetCategory}</td>
                     <td>{(ans.amount).toLocaleString(enUS, {style: "currency", currency: ans.currency})}</td>
-                    <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: "USD"})}</td>
+                    <td>{(ans.convertedAmount).toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})}</td>
                     <td>
                         {/* <UpdateButton type="Transaction" /> */}
                 <Tooltip title="Update Transaction"><Button className="btn btn-secondary trip-button" size="sm" onClick={(e)=>handleUpdate(e,ans.id,ans.name,ans.description,ans.amount,ans.currency)}><Update/></Button></Tooltip>
