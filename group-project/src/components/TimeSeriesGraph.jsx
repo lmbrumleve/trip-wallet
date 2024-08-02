@@ -37,6 +37,9 @@ ChartJS.register(
 
 export default function TimeSeriesGraph() {
 
+const date = new Date();
+let year = date.getFullYear();
+
 //DEFINE USER DEFAULT CURRENCY AND TARGET CURRENCY
 
     const routeParams = useParams();
@@ -161,7 +164,7 @@ return(
         <br/>
         <br/>
         <br/>
-        <h1>2024 Data: {userDefaultCurrency} to {targetCurrency} </h1>
+        <h1>{year} Data: {userDefaultCurrency} to {targetCurrency} </h1>
         Today's Exchange Rate: <h2>{todayRate} </h2>
         <div style = {
             {height: '300px',
