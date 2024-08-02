@@ -77,8 +77,8 @@ export default function TripByID(props) {
         }
 
     setTotalSpent(total);
-    console.log(totalSpent)
-    })
+    console.log(totalSpent.toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency}))
+    }, [transactions, userDefaultCurrency])
 
     return (
     <div>
@@ -150,9 +150,9 @@ export default function TripByID(props) {
                     <td className="bold-font">Total Spent: </td>
 
 
-                    <td className="bold-font">{totalSpent}</td>
-                     {/* .toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()}) */}
-                    {/* }</td> */}
+                    <td className="bold-font">{totalSpent
+                    //  .toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()}) 
+                    }</td> 
                     <td></td>
                     <td></td>
                 </tr>
