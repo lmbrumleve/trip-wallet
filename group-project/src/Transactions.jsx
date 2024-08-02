@@ -146,16 +146,22 @@ const handleFavorite = async (e,id,position) => {
   }
 
   console.log(transactions)
-useEffect (() => {
-let numAmount;
-let total = 0;
-    for (let i=0; i<transactions.length; i++) {
-        numAmount = Number(transactions[i].convertedAmount);
-        total+=numAmount;
-    }
-setTotalSpent(total);
+
+  useEffect(() => {
+    const total = transactions.reduce((acc, transaction) => acc + Number(transaction.convertedAmount), 0);
+    setTotalSpent(total);
+}, [transactions]);
+  
+// useEffect (() => {
+// let numAmount;
+// let total = 0;
+//     for (let i=0; i<transactions.length; i++) {
+//         numAmount = Number(transactions[i].convertedAmount);
+//         total+=numAmount;
+//     }
+// setTotalSpent(total);
 console.log(totalSpent)
-})
+// })
 
     return(
         <>
@@ -225,10 +231,12 @@ console.log(totalSpent)
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td className="bold-font">Total Spent ({userDefaultCurrency}): </td>
-                    <td className="bold-font">{totalSpent
-                    // .toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})
-                    }</td>
+                    <td className="bold-font">Total: </td>
+                    <td>{userDefaultCurrency && totalSpent.toLocaleString(enUS, { style: "currency", currency: userDefaultCurrency })}</td>
+
+                    {/* <td className="bold-font">{totalSpent
+                    .toLocaleString(enUS, {style: "currency", currency: userDefaultCurrency.toString()})
+                    }</td> */}
                     <td></td>
                 </tr>
                 </tbody>
