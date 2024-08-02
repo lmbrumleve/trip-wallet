@@ -98,39 +98,49 @@ export default function TripAdd() {
  
           };
 
-    async function addTrip(e) {
-        e.preventDefault()
-        const trip = {name, destination, budget, username, startDate, endDate, duration, 
-            fetchPhotoUrl: `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=scenicview&tags=${destination}&format=json&nojsoncallback=1`
-        }
+          const fetchPhotoUrl = async () => {
+            const response = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=scenicview&tags=${destination}&format=json&nojsoncallback=1`);
+            const result = await response.json();
+            return result.photos.photo[0];
+        };
 
-        await fetch(trip.fetchPhotoUrl)
-          .then(res=>res.json())
-          .then((result)=>{setData(result.photos.photo[0]);})
+        const addTrip = async (e) => {
+            e.preventDefault();
+            const photoData = await fetchPhotoUrl();
+            setData(photoData);
+    
+            if (photoData) {
+                const photoServer = photoData.server;
+                const photoId = photoData.id;
+                const photoSecret = photoData.secret;
+                const photoSize = "b";
+    
+                const srcPhoto = `https://live.staticflickr.com/${photoServer}/${photoId}_${photoSecret}_${photoSize}.jpg`;
+    
+                const trip = {
+                    name,
+                    destination,
+                    budget,
+                    username,
+                    startDate,
+                    endDate,
+                    duration,
+                    photoUrl: srcPhoto
+                };
+    
+                await fetch("http://localhost:8080/trips/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify(trip)
+                });
+    
+                navigate("/myTrips");
+            }
+        };
 
-        console.log(data)
-
-        let photoServer = data.server;
-        let photoId = data.id;
-        let photoSecret = data.secret;
-        let photoSize = "b"
-            
-            let srcPhoto = `https://live.staticflickr.com/${photoServer}/${photoId}_${photoSecret}_${photoSize}.jpg`
-            console.log(srcPhoto)
-            
-        trip.photoUrl = srcPhoto
-        console.log(trip)
-
-        await fetch("http://localhost:8080/trips/add", {
-            method:"POST",
-            headers:{"Content-Type":"application/json",
-            Authorization: 'Bearer ' + localStorage.getItem('token')},
-            body:JSON.stringify(trip)
-                }
-        ).then(
-            ()=>{console.log("New trip record sent")}
-        ).then(navigate("/myTrips"))
-    }
     return(
     <div>
         <NavBar/>
