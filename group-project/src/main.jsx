@@ -121,6 +121,7 @@ const router = createBrowserRouter([
         path: "/trips/update/:id",
         element: <TripUpdate />
     },
+
     {
         path: "/trips/delete/:id",
         element: <TripDelete />,
