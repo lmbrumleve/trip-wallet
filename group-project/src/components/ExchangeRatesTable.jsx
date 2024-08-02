@@ -162,26 +162,26 @@ console.log(favoriteByUsername);
 
   //FETCH DATE:
   const fetchDate = async () => {
-  await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+  await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency.toString()}`).then((res) => {
         setDate(res.data.date);
         });
     };
 
     useEffect(() => {
     fetchDate();
-    }, []);
+    }, [userDefaultCurrency]);
 console.log(userDefaultCurrency)
   //FETCH RATES:
 
   const fetchExchangeRates = async () => {
-      await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+      await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency.toString()}`).then((res) => {
           setExchangeRates(res.data.rates);
       });
   };
   
       useEffect(() => {
           fetchExchangeRates();
-      }, []);
+      }, [userDefaultCurrency]);
 
       useEffect(() => {
         setCurrencyExchangeRates(Object.keys(exchangeRates));
@@ -212,14 +212,14 @@ console.log(userDefaultCurrency)
   const [yesterdayExchangeRates, setYesterdayExchangeRates] = useState("");
 
   const fetchYesterdayExchangeRates = async () => {
-      await Axios.get(`https://api.frankfurter.app/${year.toString()}-${yesterdayMonth.toString()}-${yesterdayDate.toString()}?from=${userDefaultCurrency}`).then((res) => {
+      await Axios.get(`https://api.frankfurter.app/${year.toString()}-${yesterdayMonth.toString()}-${yesterdayDate.toString()}?from=${userDefaultCurrency.toString()}`).then((res) => {
           setYesterdayExchangeRates(res.data.rates);
       });
   };
   
       useEffect(() => {
           fetchYesterdayExchangeRates();
-      }, []);
+      }, [userDefaultCurrency]);
       // console.log(year.toString() + "-" + yesterdayMonth.toString() + "-" + yesterdayDate.toString())
       // console.log(yesterdayExchangeRates);
 
@@ -386,7 +386,7 @@ console.log(favoriteByUsername)
                       }
                       // label = {data.target}
                       /></Tooltip>
-                      <Link to={`/timeSeriesGraph/${userDefaultCurrency}/${data.currencyCode}`}>{data.currencyCode}</Link></td>
+                      <Link to={`/timeSeriesGraph/${userDefaultCurrency.toString()}/${data.currencyCode}`}>{data.currencyCode}</Link></td>
                     <td>{data.rate}</td>
                     <td>      
                       <span
