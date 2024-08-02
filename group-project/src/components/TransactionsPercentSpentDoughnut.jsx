@@ -56,7 +56,7 @@ export default function TransactionsPercentSpentDoughnut() {
 
 console.log(trip)
 console.log(transactions)
-},[transactions])
+},[ID])
 
 useEffect (() => {
   let numAmount;
@@ -71,7 +71,7 @@ useEffect (() => {
   setTotalRemaining(trip.budget - totalSpent);
   console.log(totalRemaining)
 
-  })
+  }, [transactions])
 
   return (
     <>
