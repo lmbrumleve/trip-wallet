@@ -89,14 +89,14 @@ const currencyArr = Object.keys(currency);
 
 //fetch exchange rates:
   const fetchExchangeRates = async () => {
-    await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency}`).then((res) => {
+    await Axios.get(`https://api.frankfurter.app/latest?from=${userDefaultCurrency.toString()}`).then((res) => {
         setExchangeRates(res.data.rates);
     });
 };
 
     useEffect(() => {
         fetchExchangeRates();
-    }, []);
+    }, [userDefaultCurrency]);
 
     useEffect(() => {
       setCurrencyExchangeRates(Object.keys(exchangeRates));
@@ -114,8 +114,10 @@ const currencyArr = Object.keys(currency);
     const updateTransaction = (e) => {
         e.preventDefault();
 
-        transaction.convertedAmount = Number(transaction.amount/exchangeRates[(transaction.currency)]);
-
+        transaction.convertedAmount = Number(Number(transaction.amount)/Number(exchangeRates[(transaction.currency)]));
+        console.log(transaction)
+        console.log(transaction.amount)
+        console.log(exchangeRates)
         fetch("http://localhost:8080/transactions/update/" + id, {
             method: "PUT",
             headers:{"Content-Type":"application/json",

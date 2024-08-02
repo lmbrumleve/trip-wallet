@@ -255,7 +255,7 @@ console.log(userDefaultCurrency)
   // console.log(targetCurrency);
   // console.log(targetExchangeRate)
 // console.log(favoriteByUsername)
-  targetRateObj =
+  targetRateObj = 
   {
     // amount: `${amount}`,
     base: `${userDefaultCurrency}`,
@@ -274,7 +274,7 @@ yesterdayTargetExchangeRate = yesterdayExchangeRates[`${yesterdayTargetCurrency}
 // console.log(yesterdayTargetExchangeRate);
 
 yesterdayTargetRateObj =
-{
+{ 
   // amount: `${amount}`,
   base: `${userDefaultCurrency}`,
   date: `${year.toString()}-${yesterdayMonth.toString()}-${yesterdayDate.toString()}`,
